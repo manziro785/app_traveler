@@ -1,98 +1,78 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { LinearGradient } from "expo-linear-gradient";
+import { Bot } from "lucide-react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
-
-export default function HomeScreen() {
+export default function Index() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
-
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <>
+      <LinearGradient
+        colors={["#1F83EB", "#0FAFD5"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        className=""
+      >
+        <View className="px-10 pt-16 pb-10">
+          <View>
+            <Text className="text-[#B6CEEF] text-xl">Добро пожаловать,</Text>
+            <Text className="text-[#FFFF] text-4xl font-bold">
+              Путешественник!
+            </Text>
+          </View>
+          <View className="flex-row justify-between my-5">
+            <View className="bg-white/20 p-3 rounded-2xl w-28">
+              <Text className="text-[#BDDEF8] ">Посещено</Text>
+              <Text className="text-3xl font-bold text-white">12</Text>
+            </View>
+            <View className="bg-white/20 p-3 rounded-2xl w-28">
+              <Text className="text-[#BDDEF8] ">Маршрутов</Text>
+              <Text className="text-3xl font-bold text-white">6</Text>
+            </View>
+            <View className="bg-white/20 p-3 rounded-2xl w-28">
+              <Text className="text-[#BDDEF8] ">Дней</Text>
+              <Text className="text-3xl font-bold text-white">18</Text>
+            </View>
+          </View>{" "}
+        </View>
+      </LinearGradient>
+      <View className="bg-[#F8FAFF] px-5">
+        <View className="mx-6 -mt-6 bg-white rounded-3xl p-5 shadow-xl">
+          <View className="flex-row items-center justify-between">
+            <View className="flex-row items-center mb-5 ">
+              <Text className="text-5xl mr-4">☀️</Text>
+              <View>
+                <Text className="text-gray-900 text-3xl font-bold">+28°C</Text>
+                <Text className="text-gray-500 text-base -mt-1">Солнечно</Text>
+              </View>
+            </View>
+          </View>
+          <View className="mt-4 bg-cyan-50 rounded-2xl p-4 shadow-sm">
+            <View className="flex-row items-center">
+              <View className="w-10 h-10 bg-blue-400 rounded-full items-center justify-center mr-3">
+                <Bot />
+              </View>
+              <View className="flex-1">
+                <Text className="text-gray-800 font-semibold text-base">
+                  AI рекомендация
+                </Text>
+                <Text className="text-gray-600 text-sm mt-1">
+                  Сегодня жарко! Добавил остановки в тени и кафе с
+                  кондиционером.
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View className="flex-row mt-4 gap-3">
+            <TouchableOpacity className="flex-1 bg-cyan-100 rounded-xl py-3 items-center">
+              <Text className="text-cyan-600 font-semibold">
+                Найти прохладу
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity className="flex-1 bg-gray-100 rounded-xl py-3 items-center">
+              <Text className="text-gray-700 font-semibold">Изменить</Text>
+            </TouchableOpacity>
+          </View>
+        </View>{" "}
+      </View>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});

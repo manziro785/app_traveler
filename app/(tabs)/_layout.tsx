@@ -1,35 +1,80 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Tabs } from "expo-router";
+import { Home, LucideIcon, Map, Route, User } from "lucide-react-native";
+import React from "react";
+import { View } from "react-native";
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+const TabBarIcon = ({
+  focused,
+  color,
+  size,
+  Icon,
+}: {
+  focused: boolean;
+  color: string;
+  size: number;
+  Icon: LucideIcon;
+}) => (
+  <View
+    className={`
+      p-2.5 
+      rounded-2xl 
+      ${focused ? "bg-blue-600 shadow-lg mb-5" : "bg-transparent mb-0"}
+    `}
+    style={{
+      shadowColor: focused ? "#000" : "transparent",
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.3,
+      shadowRadius: 4,
+      elevation: focused ? 8 : 0,
+    }}
+  >
+    <Icon color={focused ? "#FFFFFF" : color} size={size} />
+  </View>
+);
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+const _Layout = () => {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+        tabBarStyle: {
+          backgroundColor: "#FFFF",
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: "Главная",
+          headerShown: false,
+          tabBarIcon: (props) => <TabBarIcon {...props} Icon={Home} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="route"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: "Маршруты",
+          headerShown: false,
+          tabBarIcon: (props) => <TabBarIcon {...props} Icon={Route} />,
+        }}
+      />
+      <Tabs.Screen
+        name="map"
+        options={{
+          title: "Карта",
+          headerShown: false,
+          tabBarIcon: (props) => <TabBarIcon {...props} Icon={Map} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Профиль",
+          headerShown: false,
+          tabBarIcon: (props) => <TabBarIcon {...props} Icon={User} />,
         }}
       />
     </Tabs>
   );
-}
+};
+
+export default _Layout;
