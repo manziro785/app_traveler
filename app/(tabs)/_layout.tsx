@@ -18,7 +18,7 @@ const TabBarIcon = ({
     className={`
       p-2.5 
       rounded-2xl 
-      ${focused ? "bg-blue-600 shadow-lg mb-5" : "bg-transparent mb-0"}
+      ${focused ? "bg-[#1F83EB] shadow-lg mb-5" : "bg-transparent mb-0"}
     `}
     style={{
       shadowColor: focused ? "#000" : "transparent",

@@ -1,78 +1,108 @@
+import AdvicedCard from "@/components/home/AdvicedCard";
+import CurrentRouteCard from "@/components/home/CurrentRouteCard";
+import WeatherCard from "@/components/home/WeatherCard";
 import { LinearGradient } from "expo-linear-gradient";
-import { Bot } from "lucide-react-native";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Bot, LogOut, Plus } from "lucide-react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
   return (
     <>
-      <LinearGradient
-        colors={["#1F83EB", "#0FAFD5"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        className=""
+      <ScrollView
+        className="flex-1 bg-[#F8FAFF] "
+        showsVerticalScrollIndicator={false}
       >
-        <View className="px-10 pt-16 pb-10">
-          <View>
-            <Text className="text-[#B6CEEF] text-xl">Добро пожаловать,</Text>
-            <Text className="text-[#FFFF] text-4xl font-bold">
-              Путешественник!
-            </Text>
-          </View>
-          <View className="flex-row justify-between my-5">
-            <View className="bg-white/20 p-3 rounded-2xl w-28">
-              <Text className="text-[#BDDEF8] ">Посещено</Text>
-              <Text className="text-3xl font-bold text-white">12</Text>
-            </View>
-            <View className="bg-white/20 p-3 rounded-2xl w-28">
-              <Text className="text-[#BDDEF8] ">Маршрутов</Text>
-              <Text className="text-3xl font-bold text-white">6</Text>
-            </View>
-            <View className="bg-white/20 p-3 rounded-2xl w-28">
-              <Text className="text-[#BDDEF8] ">Дней</Text>
-              <Text className="text-3xl font-bold text-white">18</Text>
-            </View>
-          </View>{" "}
-        </View>
-      </LinearGradient>
-      <View className="bg-[#F8FAFF] px-5">
-        <View className="mx-6 -mt-6 bg-white rounded-3xl p-5 shadow-xl">
-          <View className="flex-row items-center justify-between">
-            <View className="flex-row items-center mb-5 ">
-              <Text className="text-5xl mr-4">☀️</Text>
+        <LinearGradient
+          colors={["#1F83EB", "#0FAFD5"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+        >
+          <View className="px-10 pt-16 pb-10">
+            <View className="flex flex-row justify-between items-start">
               <View>
-                <Text className="text-gray-900 text-3xl font-bold">+28°C</Text>
-                <Text className="text-gray-500 text-base -mt-1">Солнечно</Text>
-              </View>
-            </View>
-          </View>
-          <View className="mt-4 bg-cyan-50 rounded-2xl p-4 shadow-sm">
-            <View className="flex-row items-center">
-              <View className="w-10 h-10 bg-blue-400 rounded-full items-center justify-center mr-3">
-                <Bot />
-              </View>
-              <View className="flex-1">
-                <Text className="text-gray-800 font-semibold text-base">
-                  AI рекомендация
+                <Text className="text-[#B6CEEF] text-xl">
+                  Добро пожаловать,
                 </Text>
-                <Text className="text-gray-600 text-sm mt-1">
-                  Сегодня жарко! Добавил остановки в тени и кафе с
-                  кондиционером.
+                <Text className="text-4xl text-[#FFFF] font-bold">
+                  Путешественник!
                 </Text>
               </View>
+              <View className="bg-white/20 p-3 rounded-2xl h-auto">
+                <LogOut color="white" size={15} />
+              </View>
             </View>
+            <WeatherCard />
           </View>
-          <View className="flex-row mt-4 gap-3">
-            <TouchableOpacity className="flex-1 bg-cyan-100 rounded-xl py-3 items-center">
-              <Text className="text-cyan-600 font-semibold">
-                Найти прохладу
+        </LinearGradient>
+        <View className="px-10">
+          <View className="flex-row gap-3 mb-6 -mt-6">
+            <TouchableOpacity className="flex-1 bg-white rounded-3xl p-5 shadow-lg">
+              <View className="w-12 h-12 rounded-2xl items-center justify-center mb-3 overflow-hidden">
+                <LinearGradient
+                  colors={["#286BF7", "#06C8C8"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: 12,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Plus color="white" size={24} strokeWidth={3} />
+                </LinearGradient>
+              </View>
+              <Text className="text-gray-900 font-bold text-base mb-1">
+                Создать маршрут
+              </Text>
+              <Text className="text-gray-500 text-sm">
+                AI подберет идеальный план
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity className="flex-1 bg-gray-100 rounded-xl py-3 items-center">
-              <Text className="text-gray-700 font-semibold">Изменить</Text>
+
+            <TouchableOpacity className="flex-1 bg-white rounded-3xl p-5 shadow-lg">
+              <View className="w-12 h-12 bg-orange-500 rounded-2xl items-center justify-center mb-3">
+                <LinearGradient
+                  colors={["#FF7A56", "#FFAC11"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: 12,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Bot color="white" size={24} />
+                </LinearGradient>
+              </View>
+              <Text className="text-gray-900 font-bold text-base mb-1">
+                Спросить AI
+              </Text>
+              <Text className="text-gray-500 text-sm">Быстрые ответы</Text>
             </TouchableOpacity>
           </View>
-        </View>{" "}
-      </View>
+
+          <CurrentRouteCard />
+          <AdvicedCard />
+          <View className="flex-row justify-between gap-3 mb-5">
+            <View className="flex-1 bg-white rounded-2xl p-4 items-center shadow-lg">
+              <Text className="text-blue-500 text-2xl font-bold mb-1">12</Text>
+              <Text className="text-gray-500 text-xs">Мест</Text>
+            </View>
+            <View className="flex-1 bg-white rounded-2xl p-4 items-center shadow-lg">
+              <Text className="text-green-500 text-2xl font-bold mb-1">5</Text>
+              <Text className="text-gray-500 text-xs">Маршрутов</Text>
+            </View>
+            <View className="flex-1 bg-white rounded-2xl p-4 items-center shadow-lg">
+              <Text className="text-blue-500 text-2xl font-bold mb-1">3</Text>
+              <Text className="text-gray-500 text-xs">Завершено</Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
     </>
   );
 }
