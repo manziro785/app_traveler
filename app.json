@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "instamat",
-    "slug": "instamat",
+    "name": "Trip AI",
+    "slug": "Trip AI",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "",
     "scheme": "instamat",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -27,7 +27,12 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router",
+      [
+        "expo-router",
+        {
+          "root": "src/app"
+        }
+      ],
       [
         "expo-splash-screen",
         {
@@ -39,7 +44,8 @@
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true,
