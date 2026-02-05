@@ -1,12 +1,23 @@
-import AdvicedCard from "@/src/features/components/home/AdvicedCard";
-import CurrentRouteCard from "@/src/features/components/home/CurrentRouteCard";
-import WeatherCard from "@/src/features/components/home/WeatherCard";
+import { queryClient } from "@/src/app_core/lib/QueryClient";
+import AdvicedCard from "@/src/features/home/ui/AdvicedCard";
+import CurrentRouteCard from "@/src/features/home/ui/CurrentRouteCard";
+import StatsCard from "@/src/features/home/ui/StatsCard";
+import WeatherCard from "@/src/features/home/ui/WeatherCard";
+import { useAuthStore } from "@/src/shared/model/auth.store";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { Bot, LogOut, Plus } from "lucide-react-native";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
+  const router = useRouter();
+
+  const logOut = () => {
+    useAuthStore.getState().logout();
+    queryClient.clear();
+    router.replace("/");
+  };
+
   return (
     <>
       <ScrollView
@@ -28,9 +39,14 @@ export default function Index() {
                   Путешественник!
                 </Text>
               </View>
-              <View className="bg-white/20 p-3 rounded-2xl h-auto">
+
+              <TouchableOpacity
+                className="bg-white/20 p-3 rounded-2xl"
+                onPress={logOut}
+                activeOpacity={0.8}
+              >
                 <LogOut color="white" size={15} />
-              </View>
+              </TouchableOpacity>
             </View>
             <WeatherCard />
           </View>
@@ -92,20 +108,7 @@ export default function Index() {
 
           <CurrentRouteCard />
           <AdvicedCard />
-          <View className="flex-row justify-between gap-3 mb-5">
-            <View className="flex-1 bg-white rounded-2xl p-4 items-center shadow-lg">
-              <Text className="text-blue-500 text-2xl font-bold mb-1">12</Text>
-              <Text className="text-gray-500 text-xs">Мест</Text>
-            </View>
-            <View className="flex-1 bg-white rounded-2xl p-4 items-center shadow-lg">
-              <Text className="text-green-500 text-2xl font-bold mb-1">5</Text>
-              <Text className="text-gray-500 text-xs">Маршрутов</Text>
-            </View>
-            <View className="flex-1 bg-white rounded-2xl p-4 items-center shadow-lg">
-              <Text className="text-blue-500 text-2xl font-bold mb-1">3</Text>
-              <Text className="text-gray-500 text-xs">Завершено</Text>
-            </View>
-          </View>
+          <StatsCard />
         </View>
       </ScrollView>
     </>

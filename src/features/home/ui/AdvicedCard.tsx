@@ -1,9 +1,14 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { Lightbulb, Star } from "lucide-react-native";
+import { Lightbulb } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { useGetInsightsQuery } from "../model/useHome";
 
 const AdvicedCard = () => {
+  const { data, isLoading } = useGetInsightsQuery();
+  if (isLoading) return <Text>loading</Text>;
+  console.log(data);
+
   return (
     <View className="bg-white rounded-3xl p-5 shadow-sm mb-4">
       <View className="flex-row items-center mb-6">
@@ -32,6 +37,27 @@ const AdvicedCard = () => {
           </Text>
         </View>
       </View>
+      {data.map((insight) => (
+        <View className="space-y-3" key={insight.id}>
+          <TouchableOpacity className="border border-1 border-gray-200 rounded-2xl p-4 mb-2">
+            <View className="flex-row items-start justify-between">
+              <View className="flex-row items-start flex-1">
+                <View className="w-10 h-10 bg-[#FFF3D2] rounded-xl items-center justify-center mr-3">
+                  <Lightbulb color="#EAB308" size={20} />
+                </View>
+                <View className="flex-1">
+                  <Text className="text-yellow-600 font-semibold text-sm mb-1">
+                    {insight.category}
+                  </Text>
+                  <Text className="text-gray-700 text-sm leading-5">
+                    {insight.title}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      ))}
 
       <View className="space-y-3">
         <TouchableOpacity className="border border-1 border-gray-200 rounded-2xl p-4 mb-2">
@@ -46,42 +72,6 @@ const AdvicedCard = () => {
                 </Text>
                 <Text className="text-gray-700 text-sm leading-5">
                   Не бери такси у вокзала, выйди на улицу — в 2 раза дешевле
-                </Text>
-              </View>
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity className="border border-1 border-gray-200 rounded-2xl p-4 mb-2">
-          <View className="flex-row items-start justify-between">
-            <View className="flex-row items-start flex-1">
-              <View className="w-10 h-10 bg-purple-100 rounded-xl items-center justify-center mr-3">
-                <Star color="#A855F7" size={20} />
-              </View>
-              <View className="flex-1">
-                <Text className="text-purple-600 font-semibold text-sm mb-1">
-                  Секрет
-                </Text>
-                <Text className="text-gray-700 text-sm leading-5">
-                  Вход в ущелье Ала-Арча бесплатный до 8 утра
-                </Text>
-              </View>
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity className="border border-1 border-gray-200 rounded-2xl p-4">
-          <View className="flex-row items-start justify-between">
-            <View className="flex-row items-start flex-1">
-              <View className="w-10 h-10 bg-purple-100 rounded-xl items-center justify-center mr-3">
-                <Star color="#A855F7" size={20} />
-              </View>
-              <View className="flex-1">
-                <Text className="text-purple-600 font-semibold text-sm mb-1">
-                  Секрет
-                </Text>
-                <Text className="text-gray-700 text-sm leading-5">
-                  В Навате есть секретное меню для местных — спроси официанта
                 </Text>
               </View>
             </View>

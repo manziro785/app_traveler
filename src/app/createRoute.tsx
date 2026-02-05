@@ -1,83 +1,98 @@
-import ProgressBar from "@/src/features/components/shared/ProgressBar";
-import React, { useState } from "react";
-import { View } from "react-native";
-import Step1WhoAndHow from "./steps/Step1WhoAndHow";
-import Step2TimeAvailable from "./steps/Step2TimeAvailable";
-import Step3Location from "./steps/Step3Location";
-import Step4Budget from "./steps/Step4Budget";
-import Step5Preferences from "./steps/Step5Preferences";
+import { useCreateRouteFlow } from "@/src/features/route/model/useCreateRouteFlow";
+import ProgressBar from "@/src/features/route/ui/ProgressBar";
+import { useRouter } from "expo-router";
+import React from "react";
+import { ActivityIndicator, Alert, Text, View } from "react-native";
+import { useRouteCreate } from "../features/route/model/useRoute";
+import Step1WhoAndHow from "./_steps/Step1WhoAndHow";
+import Step2TimeAvailable from "./_steps/Step2TimeAvailable";
+import Step3Location from "./_steps/Step3Location";
+import Step4Budget from "./_steps/Step4Budget";
+import Step5Preferences from "./_steps/Step5Preferences";
 
-interface FormData {
-  travelWith: string | null;
-  transportType: string | null;
-  timeAvailable: string | null;
-  location: string | null;
-  budget: string | null;
-  preferences: string[];
-}
-
-export default function CreateRoute({ navigation }: any) {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState<FormData>({
-    travelWith: null,
-    transportType: null,
-    timeAvailable: null,
-    location: null,
-    budget: null,
-    preferences: [],
-  });
-
-  const totalSteps = 5;
-
-  const updateFormData = (key: keyof FormData, value: any) => {
-    setFormData((prev) => ({ ...prev, [key]: value }));
-  };
-
-  const handleNext = () => {
-    if (currentStep < totalSteps) {
-      setCurrentStep((prev) => prev + 1);
-    } else {
-      console.log("Final data:", formData);
-    }
-  };
+export default function CreateRoute() {
+  const router = useRouter();
+  const { submitRoute, isLoading } = useRouteCreate();
+  const flow = useCreateRouteFlow(5);
 
   const handleBack = () => {
-    if (currentStep > 1) {
-      setCurrentStep((prev) => prev - 1);
+    if (flow.step > 1) flow.back();
+    else router.back();
+  };
+
+  const handleNext = async () => {
+    if (flow.step < flow.totalSteps) {
+      flow.next();
+      return;
+    }
+
+    try {
+      console.log("ROUTE PAYLOAD:", JSON.stringify(flow.payload, null, 2));
+      await submitRoute(flow.payload);
+      router.push("/(tabs)");
+    } catch (e) {
+      console.error(e);
+      Alert.alert("Ошибка", "Не удалось создать маршрут. Попробуйте снова.");
     }
   };
 
-  const renderStep = () => {
-    const stepProps = {
-      formData,
-      updateFormData,
-      onNext: handleNext,
-    };
-
-    switch (currentStep) {
-      case 1:
-        return <Step1WhoAndHow {...stepProps} />;
-      case 2:
-        return <Step2TimeAvailable {...stepProps} />;
-      case 3:
-        return <Step3Location {...stepProps} />;
-      case 4:
-        return <Step4Budget {...stepProps} />;
-      case 5:
-        return <Step5Preferences {...stepProps} />;
-      default:
-        return null;
-    }
-  };
+  if (isLoading) {
+    return (
+      <View className="flex-1 bg-gray-50 items-center justify-center px-5">
+        <ActivityIndicator size="large" color="#4A90E2" />
+        <Text className="text-lg font-semibold text-gray-900 mt-4">
+          Создаём маршрут...
+        </Text>
+        <Text className="text-sm text-gray-500 mt-2 text-center">
+          AI подбирает идеальные места для вас
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View className="flex-1 bg-gray-50">
       <ProgressBar
-        currentStep={currentStep}
-        totalSteps={totalSteps}
+        currentStep={flow.step}
+        totalSteps={flow.totalSteps}
         onBack={handleBack}
       />
-      {renderStep()}
+
+      {flow.step === 1 && (
+        <Step1WhoAndHow
+          form={flow.form}
+          update={flow.update}
+          onNext={handleNext}
+        />
+      )}
+      {flow.step === 2 && (
+        <Step2TimeAvailable
+          form={flow.form}
+          update={flow.update}
+          onNext={handleNext}
+        />
+      )}
+      {flow.step === 3 && (
+        <Step3Location
+          form={flow.form}
+          update={flow.update}
+          onNext={handleNext}
+        />
+      )}
+      {flow.step === 4 && (
+        <Step4Budget
+          form={flow.form}
+          update={flow.update}
+          onNext={handleNext}
+        />
+      )}
+      {flow.step === 5 && (
+        <Step5Preferences
+          form={flow.form}
+          update={flow.update}
+          onNext={handleNext}
+        />
+      )}
     </View>
   );
 }

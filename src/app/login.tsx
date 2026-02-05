@@ -1,20 +1,11 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
-import { Eye, EyeOff, Lock, Mail, Mountain } from "lucide-react-native";
-import React, { useState } from "react";
-import {
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Mountain } from "lucide-react-native";
+import React from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { LoginForm } from "../features/auth/ui/LoginForm";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-
   return (
     <LinearGradient
       colors={["#1E40AF", "#06B6D4", "#22D3EE"]}
@@ -41,51 +32,7 @@ const Login = () => {
         </View>
 
         <View className="gap-4">
-          <View className="bg-white/20 rounded-2xl px-4 py-2 flex-row items-center backdrop-blur-lg">
-            <Mail size={20} color="#E0F2FE" className="mr-8" />
-            <TextInput
-              className="flex-1 text-white text-base pl-4"
-              placeholder="Email"
-              placeholderTextColor="#BAE6FD"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-          </View>
-          <View className="bg-white/20 rounded-2xl px-4 py-2 flex-row items-center backdrop-blur-lg">
-            <Lock size={20} color="#E0F2FE" className="mr-3" />
-            <TextInput
-              className="flex-1 text-white text-base pl-4"
-              placeholder="Пароль"
-              placeholderTextColor="#BAE6FD"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry={!showPassword}
-              autoCapitalize="none"
-            />
-            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-              {showPassword ? (
-                <EyeOff size={20} color="#BAE6FD" />
-              ) : (
-                <Eye size={20} color="#BAE6FD" />
-              )}
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity className="items-end">
-            <Text className="text-blue-100 text-sm">Забыли пароль?</Text>
-          </TouchableOpacity>
-          <Link href="/(tabs)" asChild>
-            <TouchableOpacity
-              className="bg-white rounded-2xl py-3 w-full  shadow-lg flex flex-row justify-center items-center"
-              activeOpacity={0.8}
-            >
-              <Text className="text-blue-600 text-lg font-semibold ">
-                Войти
-              </Text>
-            </TouchableOpacity>
-          </Link>
-
+          <LoginForm />
           <View className="flex-row items-center my-4">
             <View className="flex-1 h-px bg-white/30" />
             <Text className="text-white/60 mx-4 text-sm">или</Text>

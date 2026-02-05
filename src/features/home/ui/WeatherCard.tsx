@@ -1,10 +1,11 @@
 import { Sun } from "lucide-react-native";
 import React, { useEffect, useRef } from "react";
 import { Animated, Easing, Text, View } from "react-native";
+import { useGetWeatherQuery } from "../model/useHome";
 
 const WeatherCard = () => {
   const rotateAnim = useRef(new Animated.Value(0)).current;
-
+  const { data, isLoading } = useGetWeatherQuery();
   useEffect(() => {
     Animated.loop(
       Animated.timing(rotateAnim, {
@@ -15,6 +16,7 @@ const WeatherCard = () => {
       }),
     ).start();
   }, []);
+  if (isLoading) return <Text>loading...</Text>;
 
   const rotate = rotateAnim.interpolate({
     inputRange: [0, 1],
@@ -29,13 +31,15 @@ const WeatherCard = () => {
               <Sun size={32} color="#FFB800" />
             </Animated.View>
             <View className="ml-3">
-              <Text className="text-white text-2xl font-bold">+24°C</Text>
+              <Text className="text-white text-2xl font-bold">
+                {data.weather.temp}°C
+              </Text>
               <Text className="text-white/80 text-sm">Бишкек</Text>
             </View>
           </View>
           <View className="flex-1 ml-4">
             <Text className="text-white/90 text-xs text-right">
-              Возьми с собой воду — сегодня жарко! И не забудь кепку :){" "}
+              {data.recommendations}
             </Text>
           </View>
         </View>

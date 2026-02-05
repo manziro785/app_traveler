@@ -1,4 +1,3 @@
-import { api } from "@/src/shared/api/axiosInstance";
 import { useAuthStore } from "@/src/shared/model/auth.store";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
@@ -8,8 +7,8 @@ import { GoogleUser, LoginUser, RegisterUser } from "./auth.type";
 export const useAuth = () => {
   const router = useRouter();
 
-  const handleSuccess = (token: string) => {
-    useAuthStore.getState().setToken(token);
+  const handleSuccess = (data: { token: string }) => {
+    useAuthStore.getState().setToken(data.token);
     router.push("/(tabs)");
   };
 
@@ -36,6 +35,8 @@ export const useAuth = () => {
     onError: handleError,
   });
 
+  console.log(useAuthStore.getState());
+
   const submitRegisterAuth = async (userData: RegisterUser) => {
     return registerMutation.mutateAsync(userData);
   };
@@ -46,7 +47,6 @@ export const useAuth = () => {
   const submitGoogleAuth = async (userData: GoogleUser) => {
     return googleAuthMutation.mutateAsync(userData);
   };
-  console.log("REGISTER URL:", api.defaults.baseURL);
 
   return {
     submitLoginAuth,

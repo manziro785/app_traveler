@@ -1,3 +1,5 @@
+import type { FormData } from "@/src/features/route/model/createRoute.types";
+import { OptionCard } from "@/src/features/route/ui/OptionCard";
 import type { LucideIcon } from "lucide-react-native";
 import {
   Bus,
@@ -11,13 +13,9 @@ import {
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-interface Option {
-  id: string;
-  label: string;
-  icon: LucideIcon;
-}
+type Option = { id: string; label: string; icon: LucideIcon };
 
-const travelWithOptions: Option[] = [
+const companionsOptions: Option[] = [
   { id: "alone", label: "Один", icon: User },
   { id: "couple", label: "Пара", icon: Users },
   { id: "family", label: "Семья", icon: UsersRound },
@@ -31,22 +29,16 @@ const transportOptions: Option[] = [
   { id: "public", label: "Общественный", icon: Bus },
 ];
 
-interface StepProps {
-  formData: any;
-  updateFormData: (key: string, value: any) => void;
-  onNext: () => void;
-}
-
 export default function Step1WhoAndHow({
-  formData,
-  updateFormData,
+  form,
+  update,
   onNext,
-}: StepProps) {
-  const handleSelect = (type: string, value: string) => {
-    updateFormData(type, value);
-  };
-
-  const canProceed = formData.travelWith && formData.transportType;
+}: {
+  form: FormData;
+  update: <K extends keyof FormData>(key: K, value: FormData[K]) => void;
+  onNext: () => void;
+}) {
+  const canProceed = !!form.companions && !!form.transportation;
 
   return (
     <View className="flex-1 bg-gray-50">
@@ -63,13 +55,13 @@ export default function Step1WhoAndHow({
             С кем путешествуешь?
           </Text>
           <View className="flex-row flex-wrap gap-3">
-            {travelWithOptions.map((option) => (
+            {companionsOptions.map((o) => (
               <OptionCard
-                key={option.id}
-                label={option.label}
-                icon={option.icon}
-                isSelected={formData.travelWith === option.id}
-                onPress={() => handleSelect("travelWith", option.id)}
+                key={o.id}
+                label={o.label}
+                icon={o.icon}
+                isSelected={form.companions === (o.id as any)}
+                onPress={() => update("companions", o.id as any)}
               />
             ))}
           </View>
@@ -80,13 +72,13 @@ export default function Step1WhoAndHow({
             Как передвигаться?
           </Text>
           <View className="flex-row flex-wrap gap-3">
-            {transportOptions.map((option) => (
+            {transportOptions.map((o) => (
               <OptionCard
-                key={option.id}
-                label={option.label}
-                icon={option.icon}
-                isSelected={formData.transportType === option.id}
-                onPress={() => handleSelect("transportType", option.id)}
+                key={o.id}
+                label={o.label}
+                icon={o.icon}
+                isSelected={form.transportation === (o.id as any)}
+                onPress={() => update("transportation", o.id as any)}
               />
             ))}
           </View>
@@ -95,51 +87,15 @@ export default function Step1WhoAndHow({
 
       <View className="p-5">
         <TouchableOpacity
-          className={`py-4 rounded-xl items-center ${
-            canProceed
-              ? "bg-gradient-to-r from-blue-500 to-cyan-400"
-              : "bg-gray-300"
-          }`}
-          onPress={onNext}
+          className="py-4 rounded-xl items-center"
           disabled={!canProceed}
-          style={{
-            backgroundColor: canProceed ? "#4A90E2" : "#D1D5DB",
-          }}
+          onPress={onNext}
+          activeOpacity={0.85}
+          style={{ backgroundColor: canProceed ? "#4A90E2" : "#D1D5DB" }}
         >
           <Text className="text-white text-base font-semibold">Далее</Text>
         </TouchableOpacity>
       </View>
     </View>
-  );
-}
-
-interface OptionCardProps {
-  label: string;
-  icon: LucideIcon;
-  isSelected: boolean;
-  onPress: () => void;
-}
-
-function OptionCard({
-  label,
-  icon: Icon,
-  isSelected,
-  onPress,
-}: OptionCardProps) {
-  return (
-    <TouchableOpacity
-      className="bg-white rounded-xl p-5 items-center border-2"
-      style={{
-        width: "47%",
-        borderColor: isSelected ? "#2E5BFF" : "#E5E7EB",
-        backgroundColor: isSelected ? "#EDF2FF" : "#FFFFFF",
-      }}
-      onPress={onPress}
-    >
-      <Icon size={32} color="#666" />
-      <Text className="mt-2 text-sm font-medium" style={{ color: "#6B7280" }}>
-        {label}
-      </Text>
-    </TouchableOpacity>
   );
 }

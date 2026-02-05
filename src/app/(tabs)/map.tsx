@@ -10,7 +10,6 @@ import React, { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
-// Типы категорий
 const categories = [
   { id: "all", label: "Все", icon: null },
   { id: "food", label: "Еда", icon: Utensils },
@@ -19,7 +18,6 @@ const categories = [
   { id: "shopping", label: "Шопинг", icon: ShoppingBag },
 ];
 
-// Примерные места на карте
 const places = [
   {
     id: 1,
@@ -117,13 +115,11 @@ const places = [
 const Map = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
 
-  // Фильтрация мест по категории
   const filteredPlaces =
     selectedCategory === "all"
       ? places
       : places.filter((p) => p.category === selectedCategory);
 
-  // Начальная позиция карты (Бишкек)
   const initialRegion = {
     latitude: 42.8746,
     longitude: 74.5698,
@@ -133,7 +129,6 @@ const Map = () => {
 
   return (
     <View className="flex-1 bg-white">
-      {/* Header */}
       <View className="bg-white pt-12 pb-3 px-4 border-b border-gray-200">
         <View className="flex-row items-center justify-between mb-3">
           <View>
@@ -145,7 +140,6 @@ const Map = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Category filters */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -179,9 +173,7 @@ const Map = () => {
         </ScrollView>
       </View>
 
-      {/* Map Container */}
       <View className="flex-1">
-        {/* Map */}
         <View className="flex-1">
           <MapView
             provider={PROVIDER_GOOGLE}
@@ -213,19 +205,16 @@ const Map = () => {
               </Marker>
             ))}
 
-            {/* User location marker */}
             <Marker coordinate={{ latitude: 42.8746, longitude: 74.5898 }}>
               <View className="w-3 h-3 bg-blue-500 rounded-full border-2 border-white shadow" />
             </Marker>
           </MapView>
 
-          {/* My location button */}
           <TouchableOpacity className="absolute bottom-6 right-4 w-12 h-12 bg-white rounded-full items-center justify-center shadow-lg">
             <View className="w-2 h-2 bg-blue-500 rounded-full" />
           </TouchableOpacity>
         </View>
 
-        {/* Bottom places list */}
         <View
           className="bg-white rounded-t-3xl shadow-2xl"
           style={{ maxHeight: 200 }}
@@ -243,7 +232,6 @@ const Map = () => {
             className="flex-1 px-4 py-2"
             showsVerticalScrollIndicator={false}
           >
-            {/* Sierra Coffee Card */}
             <TouchableOpacity
               className="flex-row items-center bg-purple-50 rounded-2xl p-4 mb-3"
               activeOpacity={0.7}
@@ -275,7 +263,6 @@ const Map = () => {
               </TouchableOpacity>
             </TouchableOpacity>
 
-            {/* Исторический музей Card */}
             <TouchableOpacity
               className="flex-row items-center bg-white rounded-2xl p-4 border border-gray-200 mb-3"
               activeOpacity={0.7}
