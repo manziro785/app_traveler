@@ -44,7 +44,7 @@ const _Layout = () => {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Главная",
+          title: "Home",
           headerShown: false,
           tabBarIcon: (props) => <TabBarIcon {...props} Icon={Home} />,
         }}
@@ -52,7 +52,7 @@ const _Layout = () => {
       <Tabs.Screen
         name="route"
         options={{
-          title: "Маршруты",
+          title: "Route",
           headerShown: false,
           tabBarIcon: (props) => <TabBarIcon {...props} Icon={Route} />,
         }}
@@ -60,7 +60,7 @@ const _Layout = () => {
       <Tabs.Screen
         name="map"
         options={{
-          title: "Карта",
+          title: "Map",
           headerShown: false,
           tabBarIcon: (props) => <TabBarIcon {...props} Icon={Map} />,
         }}
@@ -68,7 +68,7 @@ const _Layout = () => {
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Профиль",
+          title: "Profile",
           headerShown: false,
           tabBarIcon: (props) => <TabBarIcon {...props} Icon={User} />,
         }}

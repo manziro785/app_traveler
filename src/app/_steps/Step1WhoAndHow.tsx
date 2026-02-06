@@ -16,17 +16,17 @@ import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 type Option = { id: string; label: string; icon: LucideIcon };
 
 const companionsOptions: Option[] = [
-  { id: "alone", label: "Один", icon: User },
-  { id: "couple", label: "Пара", icon: Users },
-  { id: "family", label: "Семья", icon: UsersRound },
-  { id: "company", label: "Компания", icon: Coffee },
+  { id: "alone", label: "Alone", icon: User },
+  { id: "couple", label: "Couple", icon: Users },
+  { id: "family", label: "Family", icon: UsersRound },
+  { id: "company", label: "Company", icon: Coffee },
 ];
 
 const transportOptions: Option[] = [
-  { id: "walking", label: "Пешком", icon: User },
-  { id: "car", label: "На машине", icon: Car },
-  { id: "taxi", label: "Такси", icon: CarTaxiFront },
-  { id: "public", label: "Общественный", icon: Bus },
+  { id: "walking", label: "Walking", icon: User },
+  { id: "car", label: "Car", icon: Car },
+  { id: "taxi", label: "Taxi", icon: CarTaxiFront },
+  { id: "public", label: "Public tr.", icon: Bus },
 ];
 
 export default function Step1WhoAndHow({
@@ -44,15 +44,15 @@ export default function Step1WhoAndHow({
     <View className="flex-1 bg-gray-50">
       <ScrollView className="flex-1 px-5 pt-5">
         <Text className="text-3xl font-bold text-gray-900 mb-2">
-          С кем и как?
+          With whom and how?
         </Text>
         <Text className="text-base text-gray-600 mb-8">
-          Это влияет на выбор мест
+          This influences the choice of locations
         </Text>
 
         <View className="mb-8">
           <Text className="text-base font-semibold text-gray-900 mb-4">
-            С кем путешествуешь?
+            Who are you traveling with?
           </Text>
           <View className="flex-row flex-wrap gap-3">
             {companionsOptions.map((o) => (
@@ -69,7 +69,7 @@ export default function Step1WhoAndHow({
 
         <View className="mb-8">
           <Text className="text-base font-semibold text-gray-900 mb-4">
-            Как передвигаться?
+            How to get around?
           </Text>
           <View className="flex-row flex-wrap gap-3">
             {transportOptions.map((o) => (
@@ -93,7 +93,7 @@ export default function Step1WhoAndHow({
           activeOpacity={0.85}
           style={{ backgroundColor: canProceed ? "#4A90E2" : "#D1D5DB" }}
         >
-          <Text className="text-white text-base font-semibold">Далее</Text>
+          <Text className="text-white text-base font-semibold">Next</Text>
         </TouchableOpacity>
       </View>
     </View>

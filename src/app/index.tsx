@@ -24,9 +24,8 @@ export default function WelcomeScreen() {
               <Text className="text-gray-100 text-4xl font-semibold mb-2">
                 Trip AI
               </Text>
-
               <Text className="text-white/70 text-base text-center px-4 ">
-                Твой личный гид по Кыргызстану
+                Your personal guide to Kyrgyzstan
               </Text>
             </View>
 
@@ -38,7 +37,7 @@ export default function WelcomeScreen() {
                 >
                   <View className="flex-row items-center">
                     <Text className="text-blue-600 font-bold text-center text-base ml-2">
-                      Войти
+                      Login
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -49,7 +48,7 @@ export default function WelcomeScreen() {
                 >
                   <View className="flex-row items-center">
                     <Text className="text-white font-bold text-base ml-2">
-                      Создать аккаунт
+                      Create account
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -58,7 +57,7 @@ export default function WelcomeScreen() {
           </View>
           <View className="items-center pb-4">
             <Text className="text-white/60 text-xs mt-4">
-              AI, который знает тебя
+              AI that knows you
             </Text>
           </View>
         </View>

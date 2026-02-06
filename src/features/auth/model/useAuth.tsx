@@ -35,8 +35,6 @@ export const useAuth = () => {
     onError: handleError,
   });
 
-  console.log(useAuthStore.getState());
-
   const submitRegisterAuth = async (userData: RegisterUser) => {
     return registerMutation.mutateAsync(userData);
   };

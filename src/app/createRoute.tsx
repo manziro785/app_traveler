@@ -27,7 +27,6 @@ export default function CreateRoute() {
     }
 
     try {
-      console.log("ROUTE PAYLOAD:", JSON.stringify(flow.payload, null, 2));
       await submitRoute(flow.payload);
       router.push("/(tabs)");
     } catch (e) {
@@ -41,10 +40,10 @@ export default function CreateRoute() {
       <View className="flex-1 bg-gray-50 items-center justify-center px-5">
         <ActivityIndicator size="large" color="#4A90E2" />
         <Text className="text-lg font-semibold text-gray-900 mt-4">
-          Создаём маршрут...
+          Creating a route...
         </Text>
         <Text className="text-sm text-gray-500 mt-2 text-center">
-          AI подбирает идеальные места для вас
+          AI finds the perfect places for you
         </Text>
       </View>
     );

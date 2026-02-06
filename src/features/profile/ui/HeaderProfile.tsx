@@ -18,7 +18,7 @@ const HeaderProfile = () => {
         <TouchableOpacity className="w-10 h-10 items-center justify-center">
           <ChevronLeft color="white" size={24} />
         </TouchableOpacity>
-        <Text className="text-white text-xl font-bold">Профиль</Text>
+        <Text className="text-white text-xl font-bold">Profile</Text>
         <TouchableOpacity className="w-10 h-10 items-center justify-center">
           <Edit3 color="white" size={20} />
         </TouchableOpacity>
@@ -33,7 +33,7 @@ const HeaderProfile = () => {
             {data.name}
           </Text>
           <Text className="text-white/80 text-sm">
-            AI знает тебя лучше, чем ты думаешь
+            AI knows you better than you think
           </Text>
         </View>
       </View>

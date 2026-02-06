@@ -3,6 +3,7 @@ import { Link } from "expo-router";
 import { Mountain } from "lucide-react-native";
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import GoogleForm from "../features/auth/ui/GoogleForm";
 import { RegisterForm } from "../features/auth/ui/RegisterForm";
 
 const Register = () => {
@@ -24,10 +25,10 @@ const Register = () => {
           </View>
 
           <Text className="text-white text-3xl font-bold mb-2">
-            Создай аккаунт
+            Create account
           </Text>
           <Text className="text-blue-100 text-base">
-            Начни свое путешествие с Nomad AI
+            Start your trip with Trip AI
           </Text>
         </View>
 
@@ -35,31 +36,22 @@ const Register = () => {
 
         <View className="flex-row items-center my-4">
           <View className="flex-1 h-px bg-white/30" />
-          <Text className="text-white/60 mx-4 text-sm">или</Text>
+          <Text className="text-white/60 mx-4 text-sm">or</Text>
           <View className="flex-1 h-px bg-white/30" />
         </View>
 
-        <TouchableOpacity
-          className="bg-gray-900/80 rounded-2xl py-4 flex-row items-center justify-center gap-3"
-          activeOpacity={0.8}
-        >
-          <View className="w-5 h-5 bg-white rounded-full items-center justify-center">
-            <Text className="text-xs">G</Text>
-          </View>
-          <Text className="text-white text-base">
-            Регистрация с помощью Google
-          </Text>
-        </TouchableOpacity>
+        <GoogleForm title_google="Register" />
 
         <View className="flex-row items-center justify-center mt-6">
-          <Text className="text-blue-100 text-base">Уже есть аккаунт? </Text>
+          <Text className="text-blue-100 text-base">
+            Already have an account?{" "}
+          </Text>
           <TouchableOpacity>
             <Link href="/login">
-              <Text className="text-white text-base font-semibold">Войти</Text>
+              <Text className="text-white text-base font-semibold">Login</Text>
             </Link>
           </TouchableOpacity>
         </View>
-        {/* </View> */}
       </ScrollView>
     </LinearGradient>
   );

@@ -34,7 +34,7 @@ const WeatherCard = () => {
               <Text className="text-white text-2xl font-bold">
                 {data.weather.temp}°C
               </Text>
-              <Text className="text-white/80 text-sm">Бишкек</Text>
+              <Text className="text-white/80 text-sm">Bishkek</Text>
             </View>
           </View>
           <View className="flex-1 ml-4">

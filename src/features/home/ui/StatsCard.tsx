@@ -11,13 +11,13 @@ const StatsCard = () => {
         <Text className="text-blue-500 text-2xl font-bold mb-1">
           {data.visitedPlaces}
         </Text>
-        <Text className="text-gray-500 text-xs">Мест</Text>
+        <Text className="text-gray-500 text-xs">Places</Text>
       </View>
       <View className="flex-1 bg-white rounded-2xl p-4 items-center shadow-lg">
         <Text className="text-green-500 text-2xl font-bold mb-1">
           {data.totalRoutes}
         </Text>
-        <Text className="text-gray-500 text-xs">Маршрутов</Text>
+        <Text className="text-gray-500 text-xs">Routes</Text>
       </View>
       <View className="flex-1 bg-white rounded-2xl p-4 items-center shadow-lg">
         <Text className="text-blue-500 text-2xl font-bold mb-1">

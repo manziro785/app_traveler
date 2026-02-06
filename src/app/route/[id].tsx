@@ -1,20 +1,29 @@
+import { useGetRouteById } from "@/src/features/route/model/useRoute";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, useLocalSearchParams } from "expo-router";
 import {
+  Camera,
+  ChevronDown,
   ChevronLeft,
+  ChevronUp,
   Clock,
   Coffee,
   DollarSign,
   Heart,
+  Landmark,
   Lightbulb,
   Map,
   MessageCircle,
   MoreVertical,
-  Navigation,
-  Users,
-  Volume2,
+  Museum,
+  Music,
+  Palmtree,
+  ShoppingBag,
+  Trees,
+  User,
+  UtensilsCrossed,
 } from "lucide-react-native";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import {
   ScrollView,
   StatusBar,
@@ -25,44 +34,60 @@ import {
 
 const Reel = () => {
   const { id } = useLocalSearchParams();
-  const itineraryItems = [
-    {
-      id: 1,
-      time: "10:00 - 11:00",
-      title: "Sierra Coffee",
-      description: "Лучший кофе в городе с уютной атмосферой",
-      duration: "60 мин",
-      icon: "coffee",
-      color: "bg-red-400",
-      tags: [{ icon: "map-pin", text: "Попробуй flat white" }],
-    },
-    {
-      id: 2,
-      time: "11:15 - 12:00",
-      title: "Исторический музей",
-      subtitle: "🕐 15 минут пешком от кофейни",
-      description: "Краткая история Кыргызстана за один час",
-      duration: "60 мин",
-      icon: "museum",
-      color: "bg-purple-500",
-      tags: [
-        { icon: "lightbulb", text: "Аудиогид включен" },
-        { icon: "volume", text: "Аудиогид", link: true },
-      ],
-    },
-    {
-      id: 3,
-      time: "12:15 - 13:00",
-      title: "Дубовый парк",
-      subtitle: "🚶 Не путь к обьду",
-      duration: "45 мин",
-      description: "Парк сквозной с юга на север",
+  const { data, isLoading } = useGetRouteById(id);
+  const [expandedItems, setExpandedItems] = useState({});
 
-      icon: "park",
-      color: "bg-teal-400",
-      tags: [{ icon: "lightbulb", text: "Возьми воду с собой" }],
-    },
+  // Массив иконок
+  const icons = [
+    Coffee,
+    UtensilsCrossed,
+    Camera,
+    Landmark,
+    Trees,
+    ShoppingBag,
+    Music,
+    Palmtree,
+    Museum,
   ];
+
+  // Массив цветов
+  const colors = [
+    "bg-red-500",
+    "bg-blue-500",
+    "bg-green-500",
+    "bg-purple-500",
+    "bg-pink-500",
+    "bg-orange-500",
+    "bg-teal-500",
+    "bg-indigo-500",
+    "bg-yellow-500",
+  ];
+
+  // Генерируем рандомные иконки и цвета для каждого места (мемоизируем, чтобы не менялись при ререндере)
+  const placeStyles = useMemo(() => {
+    if (!data?.places) return {};
+
+    return data.places.reduce((acc, place) => {
+      acc[place.placeId] = {
+        icon: icons[Math.floor(Math.random() * icons.length)],
+        color: colors[Math.floor(Math.random() * colors.length)],
+      };
+      return acc;
+    }, {});
+  }, [data?.places]);
+
+  if (isLoading) return <Text>loading</Text>;
+
+  console.log(data);
+
+  const time = data.params.duration / 60;
+
+  const toggleItem = (placeId) => {
+    setExpandedItems((prev) => ({
+      ...prev,
+      [placeId]: !prev[placeId],
+    }));
+  };
 
   return (
     <>
@@ -90,26 +115,30 @@ const Reel = () => {
         </View>
         <View className="mx-5">
           <View className="bg-white/20 self-start px-3 py-1 rounded-full mb-2">
-            <Text className="text-white text-xs font-medium">Черновик</Text>
+            <Text className="text-white text-xs font-medium">
+              {data.status}
+            </Text>
           </View>
           <Text className="text-white text-2xl font-bold mb-1">
-            Маршрут по osh
+            {data.name}
           </Text>
-          <Text className="text-white/90 text-sm mb-4">
-            AI-сгенерированный маршрут
-          </Text>
+          <Text className="text-white/90 text-sm mb-4">{data.description}</Text>
           <View className="flex-row items-center gap-4">
             <View className="flex-row items-center gap-1">
               <Clock color="#fff" size={16} />
-              <Text className="text-white text-sm">8 ч</Text>
+              <Text className="text-white text-sm">{time} h</Text>
             </View>
             <View className="flex-row items-center gap-1">
               <DollarSign color="#fff" size={16} />
-              <Text className="text-white text-sm">~3000 сом</Text>
+              <Text className="text-white text-sm">
+                ~{data.params.budget} som
+              </Text>
             </View>
             <View className="flex-row items-center gap-1">
-              <Users color="#fff" size={16} />
-              <Text className="text-white text-sm">5 км</Text>
+              <User color="#fff" size={16} />
+              <Text className="text-white text-sm">
+                {data.params.transportation}
+              </Text>
             </View>
           </View>
         </View>
@@ -119,74 +148,82 @@ const Reel = () => {
         <TouchableOpacity className="flex-row items-center justify-center gap-2">
           <MessageCircle color="#3b82f6" size={20} />
           <Text className="text-blue-600 font-medium">
-            Спросить AI о маршруте
+            Ask AI for directions
           </Text>
         </TouchableOpacity>
       </View>
 
       <ScrollView className="flex-1 px-4" showsVerticalScrollIndicator={false}>
         <View className="relative pb-24">
-          {itineraryItems.map((item, index) => (
-            <View key={item.id} className="flex-row mb-6">
-              <View className="items-center mr-4">
-                <View
-                  className={`w-12 h-12 ${item.color} rounded-full items-center justify-center`}
-                >
-                  {item.icon === "coffee" && <Coffee color="#fff" size={24} />}
-                  {item.icon === "museum" && (
-                    <Text className="text-white text-2xl">🏛️</Text>
-                  )}
-                  {item.icon === "park" && (
-                    <Text className="text-white text-2xl">🌳</Text>
-                  )}
-                </View>
-                {index < itineraryItems.length - 1 && (
-                  <View className="w-0.5 h-full bg-gray-300 absolute top-12" />
-                )}
-              </View>
-              <View className="flex-1 bg-white rounded-xl p-4 shadow-sm">
-                <View className="flex-row items-center justify-between mb-2">
-                  <Text className="font-semibold text-gray-900">
-                    {item.time}
-                  </Text>
-                  <Text className="text-xs text-gray-400">{item.duration}</Text>
-                </View>
+          {data.places.map((item, index) => {
+            const IconComponent = placeStyles[item.placeId]?.icon || Coffee;
+            const colorClass = placeStyles[item.placeId]?.color || "bg-red-500";
 
-                {item.subtitle && (
-                  <Text className="text-xs text-gray-500 mb-2">
-                    {item.subtitle}
-                  </Text>
-                )}
-
-                <Text className="text-base font-bold text-gray-900 mb-1">
-                  {item.title}
-                </Text>
-                <Text className="text-sm text-gray-600 mb-6">
-                  {item.description}
-                </Text>
-                {item.tags.map((tag, tagIndex) => (
-                  <View key={tagIndex} className="mb-2">
-                    {tag.link ? (
-                      <TouchableOpacity className="flex-row gap-2 bg-blue-100 p-2 rounded-xl w-[35%]">
-                        <Volume2 color="#3b82f6" size={16} />
-
-                        <Text className="text-blue-600 text-sm font-medium">
-                          {tag.text}
-                        </Text>
-                      </TouchableOpacity>
-                    ) : (
-                      <View className="flex-row items-center gap-2">
-                        <Lightbulb color="#f59e0b" size={16} />
-                        <Text className="text-gray-700 text-sm">
-                          {tag.text}
-                        </Text>
-                      </View>
-                    )}
+            return (
+              <View key={item.placeId} className="flex-row mb-6">
+                <View className="items-center mr-4">
+                  <View
+                    className={`w-12 h-12 ${colorClass} rounded-3xl items-center justify-center`}
+                  >
+                    <IconComponent color="#fff" size={24} />
                   </View>
-                ))}
+                  {index < data.places.length - 1 && (
+                    <View className="w-0.5 h-full bg-gray-300 absolute top-12" />
+                  )}
+                </View>
+                <View className="flex-1 bg-white rounded-xl p-4 shadow-sm">
+                  <Text className="text-base font-bold text-gray-900 mb-1 ">
+                    {item.name}
+                  </Text>
+                  <Text className="text-sm text-gray-600 mb-3">
+                    {item.description}
+                  </Text>
+
+                  <View className="flex-row justify-between">
+                    <View className="flex-row items-center justify-between mb-2">
+                      <Text className="font-semibold text-gray-900"></Text>
+                      <Text className="text-xs text-gray-400">
+                        ± {item.startTime} - {item.endTime}
+                      </Text>
+                    </View>
+                    <TouchableOpacity
+                      onPress={() => toggleItem(item.placeId)}
+                      className="flex-row items-center gap-1 mb-2 justify-end"
+                    >
+                      {expandedItems[item.placeId] ? (
+                        <ChevronDown color="#9ca3af" size={20} />
+                      ) : (
+                        <ChevronUp color="#9ca3af" size={20} />
+                      )}
+
+                      <Text className="text-sm text-gray-500">
+                        {expandedItems[item.placeId] ? "close" : "show"}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  {expandedItems[item.placeId] && (
+                    <View>
+                      {item.photoSpot && (
+                        <Text className="text-sm text-gray-500 mb-2">
+                          {item.photoSpot}
+                        </Text>
+                      )}
+                      <View className="flex-row rounded-xl items-start flex-1 py-2 px-3 bg-[#FFF3D2]">
+                        <View className="w-10 h-10 items-center justify-center mr-3">
+                          <Lightbulb color="#EAB308" size={20} />
+                        </View>
+                        <View className="flex-1">
+                          <Text className="text-yellow-600 font-semibold text-sm mb-1">
+                            {item.tips}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  )}
+                </View>
               </View>
-            </View>
-          ))}
+            );
+          })}
         </View>
       </ScrollView>
 
@@ -195,13 +232,7 @@ const Reel = () => {
           <Link href="/(tabs)/map" asChild className="flex-1">
             <TouchableOpacity className="bg-gray-100 py-3 rounded-xl flex-row items-center justify-center gap-2">
               <Map color="#374151" size={20} />
-              <Text className="text-gray-900 font-semibold">На карте</Text>
-            </TouchableOpacity>
-          </Link>
-          <Link href="/(tabs)/map" asChild className="flex-1">
-            <TouchableOpacity className="w-full bg-cyan-500 py-3 rounded-xl flex-row items-center justify-center gap-2">
-              <Navigation color="#fff" size={20} />
-              <Text className="text-white font-semibold">Начать</Text>
+              <Text className="text-gray-900 font-semibold">On map</Text>
             </TouchableOpacity>
           </Link>
         </View>

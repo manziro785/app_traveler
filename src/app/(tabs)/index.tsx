@@ -1,23 +1,14 @@
-import { queryClient } from "@/src/app_core/lib/QueryClient";
 import AdvicedCard from "@/src/features/home/ui/AdvicedCard";
 import CurrentRouteCard from "@/src/features/home/ui/CurrentRouteCard";
 import StatsCard from "@/src/features/home/ui/StatsCard";
 import WeatherCard from "@/src/features/home/ui/WeatherCard";
-import { useAuthStore } from "@/src/shared/model/auth.store";
+import { useLogout } from "@/src/shared/model/logout";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link, useRouter } from "expo-router";
+import { Link } from "expo-router";
 import { Bot, LogOut, Plus } from "lucide-react-native";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
-  const router = useRouter();
-
-  const logOut = () => {
-    useAuthStore.getState().logout();
-    queryClient.clear();
-    router.replace("/");
-  };
-
   return (
     <>
       <ScrollView
@@ -32,17 +23,15 @@ export default function Index() {
           <View className="px-6 pt-16 pb-10">
             <View className="flex flex-row justify-between items-start">
               <View>
-                <Text className="text-[#B6CEEF] text-xl">
-                  Добро пожаловать,
-                </Text>
+                <Text className="text-[#B6CEEF] text-xl">Welcome,</Text>
                 <Text className="text-4xl text-[#FFFF] font-bold">
-                  Путешественник!
+                  Traveler!
                 </Text>
               </View>
 
               <TouchableOpacity
                 className="bg-white/20 p-3 rounded-2xl"
-                onPress={logOut}
+                onPress={useLogout}
                 activeOpacity={0.8}
               >
                 <LogOut color="white" size={15} />
@@ -72,10 +61,10 @@ export default function Index() {
                   </LinearGradient>
                 </View>
                 <Text className="text-gray-900 font-bold text-base mb-1">
-                  Создать маршрут
+                  Create route
                 </Text>
                 <Text className="text-gray-500 text-sm">
-                  AI подберет идеальный план
+                  AI will select the ideal plan
                 </Text>
               </TouchableOpacity>
             </Link>
@@ -99,9 +88,9 @@ export default function Index() {
                   </LinearGradient>
                 </View>
                 <Text className="text-gray-900 font-bold text-base mb-1">
-                  Спросить AI
+                  Ask AI
                 </Text>
-                <Text className="text-gray-500 text-sm">Быстрые ответы</Text>
+                <Text className="text-gray-500 text-sm">Fast answers</Text>
               </TouchableOpacity>
             </Link>
           </View>

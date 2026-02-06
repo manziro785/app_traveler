@@ -3,6 +3,7 @@ import { Link } from "expo-router";
 import { Mountain } from "lucide-react-native";
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import GoogleForm from "../features/auth/ui/GoogleForm";
 import { LoginForm } from "../features/auth/ui/LoginForm";
 
 const Login = () => {
@@ -24,10 +25,10 @@ const Login = () => {
           </View>
 
           <Text className="text-white text-3xl font-bold mb-2">
-            С возвращением!
+            Welcome back!
           </Text>
           <Text className="text-blue-100 text-base">
-            Войди, чтобы продолжить путешествие
+            Log in to continue your journey
           </Text>
         </View>
 
@@ -35,31 +36,29 @@ const Login = () => {
           <LoginForm />
           <View className="flex-row items-center my-4">
             <View className="flex-1 h-px bg-white/30" />
-            <Text className="text-white/60 mx-4 text-sm">или</Text>
+            <Text className="text-white/60 mx-4 text-sm">or</Text>
             <View className="flex-1 h-px bg-white/30" />
           </View>
-          <TouchableOpacity
-            className="bg-gray-900/80 rounded-2xl py-4 flex-row items-center justify-center gap-3"
-            activeOpacity={0.8}
-          >
-            <View className="w-5 h-5 bg-white rounded-full items-center justify-center">
-              <Text className="text-xs font-bold">G</Text>
-            </View>
-            <Text className="text-white text-base">
-              Вход через аккаунт Google
-            </Text>
-          </TouchableOpacity>
+          <GoogleForm title_google="Login" />
           <View className="flex-row items-center justify-center mt-6">
-            <Text className="text-blue-100 text-base">Еще нет аккаунта? </Text>
+            <Text className="text-blue-100 text-base">
+              Don't have an account yet?{" "}
+            </Text>
             <TouchableOpacity>
               <Link href="/register">
                 <Text className="text-white text-base font-semibold">
-                  Зарегистрироваться
+                  Register
                 </Text>
               </Link>
             </TouchableOpacity>
           </View>
         </View>
+
+        <Link href="/(tabs)" asChild>
+          <TouchableOpacity>
+            <Text>LC100</Text>
+          </TouchableOpacity>
+        </Link>
       </ScrollView>
     </LinearGradient>
   );

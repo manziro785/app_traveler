@@ -1,5 +1,5 @@
 import StatsCard from "@/src/features/home/ui/StatsCard";
-import useGetRoutes from "@/src/features/route/model/useRoute";
+import { useGetRoutes } from "@/src/features/route/model/useRoute";
 import RouteCard from "@/src/features/route/ui/RouteCard";
 import { Link } from "expo-router";
 import { ChevronLeft } from "lucide-react-native";
@@ -19,19 +19,19 @@ const Route = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-      <View className="pt-14  items-center justify-between px-4 py-3 bg-white">
-        <View className="flex-row justify-between w-full">
+      <View className="pt-14  items-center justify-between px-4 bg-white">
+        <View className="flex-row justify-between w-full pb-5">
           <View className="flex-row items-center gap-3">
             <TouchableOpacity className="p-1">
               <ChevronLeft color="#666" size={24} />
             </TouchableOpacity>
             <Text className="text-xl font-extrabold  text-gray-900">
-              Мои маршруты
+              My routes
             </Text>
           </View>
           <Link href="/createRoute" asChild>
             <TouchableOpacity className="bg-blue-600 px-4 py-1.5 rounded-full">
-              <Text className="text-white text-sm  font-medium">+ Новый</Text>
+              <Text className="text-white text-sm  font-medium">+ New</Text>
             </TouchableOpacity>
           </Link>
         </View>

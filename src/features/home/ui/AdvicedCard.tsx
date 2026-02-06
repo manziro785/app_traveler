@@ -7,7 +7,6 @@ import { useGetInsightsQuery } from "../model/useHome";
 const AdvicedCard = () => {
   const { data, isLoading } = useGetInsightsQuery();
   if (isLoading) return <Text>loading</Text>;
-  console.log(data);
 
   return (
     <View className="bg-white rounded-3xl p-5 shadow-sm mb-4">
@@ -30,10 +29,10 @@ const AdvicedCard = () => {
         </View>
         <View className="flex-1">
           <Text className="text-gray-900 font-bold text-lg">
-            Локальные инсайты
+            Local insights
           </Text>
           <Text className="text-gray-500 text-sm">
-            То, что не найдешь в гидах
+            What you won't find in guides
           </Text>
         </View>
       </View>
@@ -58,26 +57,6 @@ const AdvicedCard = () => {
           </TouchableOpacity>
         </View>
       ))}
-
-      <View className="space-y-3">
-        <TouchableOpacity className="border border-1 border-gray-200 rounded-2xl p-4 mb-2">
-          <View className="flex-row items-start justify-between">
-            <View className="flex-row items-start flex-1">
-              <View className="w-10 h-10 bg-[#FFF3D2] rounded-xl items-center justify-center mr-3">
-                <Lightbulb color="#EAB308" size={20} />
-              </View>
-              <View className="flex-1">
-                <Text className="text-yellow-600 font-semibold text-sm mb-1">
-                  Лайфхак
-                </Text>
-                <Text className="text-gray-700 text-sm leading-5">
-                  Не бери такси у вокзала, выйди на улицу — в 2 раза дешевле
-                </Text>
-              </View>
-            </View>
-          </View>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };

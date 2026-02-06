@@ -61,7 +61,7 @@ export function LoginForm() {
           render={({ field: { value, onChange, onBlur } }) => (
             <TextInput
               className="flex-1 text-white text-base pl-2"
-              placeholder="Пароль"
+              placeholder="Password"
               placeholderTextColor="#BAE6FD"
               value={value}
               onChangeText={onChange}
@@ -86,7 +86,7 @@ export function LoginForm() {
         <Text className="text-red-200 -mt-2">{errors.password.message}</Text>
       )}
       <TouchableOpacity className="items-end">
-        <Text className="text-blue-100 text-sm">Забыли пароль?</Text>
+        <Text className="text-blue-100 text-sm">Forgot password?</Text>
       </TouchableOpacity>
       <TouchableOpacity
         className="bg-white rounded-2xl py-4 w-full mt-4 shadow-lg flex flex-row justify-center items-center"
@@ -95,7 +95,7 @@ export function LoginForm() {
         onPress={handleSubmit(onSubmit)}
       >
         <Text className="text-blue-600 text-lg font-semibold">
-          {isLoading ? "Вход..." : "Войти"}
+          {isLoading ? "Login..." : "Login"}
         </Text>
       </TouchableOpacity>
     </View>

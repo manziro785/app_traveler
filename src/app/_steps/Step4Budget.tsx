@@ -17,10 +17,10 @@ type Option = {
 };
 
 const budgetOptions: Option[] = [
-  { id: "economy", label: "Эконом (500)", icon: Coins },
-  { id: "medium", label: "Средний (1500)", icon: Wallet },
-  { id: "comfort", label: "Комфорт (3000)", icon: CreditCard },
-  { id: "unlimited", label: "Без лимита", icon: InfinityIcon },
+  { id: "economy", label: "Economy (500)", icon: Coins },
+  { id: "medium", label: "Medium (1500)", icon: Wallet },
+  { id: "comfort", label: "Comfort (3000)", icon: CreditCard },
+  { id: "unlimited", label: "Unlimited", icon: InfinityIcon },
 ];
 
 export default function Step4Budget({
@@ -37,8 +37,8 @@ export default function Step4Budget({
   return (
     <View className="flex-1 bg-gray-50">
       <ScrollView className="flex-1 px-5 pt-5">
-        <Text className="text-3xl font-bold text-gray-900 mb-2">Бюджет</Text>
-        <Text className="text-base text-gray-600 mb-8">Сом на прогулку</Text>
+        <Text className="text-3xl font-bold text-gray-900 mb-2">Budget</Text>
+        <Text className="text-base text-gray-600 mb-8">Som for a walk у</Text>
 
         <View className="flex-row flex-wrap gap-3">
           {budgetOptions.map((o) => (
@@ -61,7 +61,7 @@ export default function Step4Budget({
           activeOpacity={0.85}
           style={{ backgroundColor: canProceed ? "#4A90E2" : "#D1D5DB" }}
         >
-          <Text className="text-white text-base font-semibold">Далее</Text>
+          <Text className="text-white text-base font-semibold">Next</Text>
         </TouchableOpacity>
       </View>
     </View>

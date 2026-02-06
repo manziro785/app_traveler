@@ -1,6 +1,13 @@
+import { queryClient } from "@/src/app_core/lib/QueryClient";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
-import { fetchRoute, getRoutes } from "../api/route";
+import {
+  createRoute,
+  deleteRoute,
+  editRoute,
+  getRouteById,
+  getRoutes,
+} from "../api/route";
 import { RouteType } from "./route.type";
 
 export const useRouteCreate = () => {
@@ -16,7 +23,7 @@ export const useRouteCreate = () => {
   };
 
   const routeCreateMutation = useMutation({
-    mutationFn: (params: RouteType) => fetchRoute(params),
+    mutationFn: (params: RouteType) => createRoute(params),
     onSuccess: handleSuccess,
     onError: handleError,
   });
@@ -31,11 +38,44 @@ export const useRouteCreate = () => {
   };
 };
 
-const useGetRoutes = () => {
+export const useEditRoute = (id: string) => {
+  const handleSuccess = () => {
+    queryClient.invalidateQueries({ queryKey: ["route", id] });
+  };
+
+  const handleError = (error: unknown) => {
+    const msg = error instanceof Error ? error.message : String(error);
+    console.error(msg);
+  };
+
+  return useMutation({
+    mutationFn: (id) => editRoute(id),
+    onSuccess: handleSuccess,
+    onError: handleError,
+  });
+};
+
+export const useDeleteRoute = () => {
+  return useMutation({
+    mutationFn: (id: string) => deleteRoute(id),
+    onSuccess: (_data, id) => {
+      queryClient.invalidateQueries({ queryKey: ["routes"] });
+      queryClient.removeQueries({ queryKey: ["routes", id] });
+    },
+  });
+};
+
+export const useGetRoutes = () => {
   return useQuery({
     queryKey: ["routes"],
     queryFn: getRoutes,
   });
 };
 
-export default useGetRoutes;
+export const useGetRouteById = (idRoute: string) => {
+  return useQuery({
+    queryKey: ["routes", idRoute],
+    queryFn: async () => getRouteById(idRoute),
+    enabled: !!idRoute,
+  });
+};

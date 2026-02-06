@@ -3,12 +3,12 @@ import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 const moods = [
-  { id: "food", label: "Еда" },
-  { id: "history", label: "История" },
-  { id: "nature", label: "Природа" },
-  { id: "relaxation", label: "Релакс" },
-  { id: "shopping", label: "Шоппинг" },
-  { id: "photo", label: "Фото-места" },
+  { id: "food", label: "Food" },
+  { id: "history", label: "History" },
+  { id: "nature", label: "Nature" },
+  { id: "relaxation", label: "Relaxation" },
+  { id: "shopping", label: "Shopping" },
+  { id: "photo", label: "Photo places" },
 ];
 
 function Pill({
@@ -63,11 +63,9 @@ export default function Step5Preferences({
   return (
     <View className="flex-1 bg-gray-50">
       <ScrollView className="flex-1 px-5 pt-5">
-        <Text className="text-3xl font-bold text-gray-900 mb-2">
-          Настроение
-        </Text>
+        <Text className="text-3xl font-bold text-gray-900 mb-2">Mood</Text>
         <Text className="text-base text-gray-600 mb-6">
-          Выбери интересы (можно несколько)
+          Select interests (you can select several)
         </Text>
 
         <View className="flex-row flex-wrap gap-3">
@@ -91,7 +89,7 @@ export default function Step5Preferences({
           style={{ backgroundColor: canProceed ? "#4A90E2" : "#D1D5DB" }}
         >
           <Text className="text-white text-base font-semibold">
-            Создать маршрут
+            Create route
           </Text>
         </TouchableOpacity>
       </View>

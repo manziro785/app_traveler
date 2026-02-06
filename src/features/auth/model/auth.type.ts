@@ -14,5 +14,5 @@ export interface GoogleUser {
   googleId: number;
   email: string;
   name: string;
-  avatar: string;
+  picture: string;
 }

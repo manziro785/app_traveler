@@ -18,11 +18,11 @@ type Option = {
 };
 
 const locationOptions: Option[] = [
-  { id: "bishkek", label: "Бишкек", icon: Building2 },
-  { id: "issyk-kul", label: "Иссык-Куль", icon: Mountain },
-  { id: "karakol", label: "Каракол", icon: Trees },
-  { id: "osh", label: "Ош", icon: Landmark },
-  { id: "naryn", label: "Нарын", icon: MapPin },
+  { id: "bishkek", label: "Bishkek", icon: Building2 },
+  { id: "issyk-kul", label: "Issyk-Kul", icon: Mountain },
+  { id: "karakol", label: "Karakol", icon: Trees },
+  { id: "osh", label: "Osh", icon: Landmark },
+  { id: "naryn", label: "Naryn", icon: MapPin },
 ];
 
 export default function Step3Location({
@@ -40,9 +40,9 @@ export default function Step3Location({
     <View className="flex-1 bg-gray-50">
       <ScrollView className="flex-1 px-5 pt-5">
         <Text className="text-3xl font-bold text-gray-900 mb-2">
-          Где гуляем?
+          Where are we walking?
         </Text>
-        <Text className="text-base text-gray-600 mb-8">Выбери регион</Text>
+        <Text className="text-base text-gray-600 mb-8">Select region</Text>
 
         <View className="flex-row flex-wrap gap-3">
           {locationOptions.map((o) => (
@@ -65,7 +65,7 @@ export default function Step3Location({
           activeOpacity={0.85}
           style={{ backgroundColor: canProceed ? "#4A90E2" : "#D1D5DB" }}
         >
-          <Text className="text-white text-base font-semibold">Далее</Text>
+          <Text className="text-white text-base font-semibold">Next</Text>
         </TouchableOpacity>
       </View>
     </View>

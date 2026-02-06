@@ -12,10 +12,10 @@ type Option = {
 };
 
 const timeOptions: Option[] = [
-  { id: "2-3hours", label: "2–3 часа", icon: Timer },
-  { id: "half-day", label: "Полдня", icon: Clock },
-  { id: "fullday", label: "Весь день", icon: Sun },
-  { id: "weekend", label: "Уикенд", icon: CalendarDays },
+  { id: "2-3hours", label: "2–3 hours", icon: Timer },
+  { id: "half-day", label: "Half day", icon: Clock },
+  { id: "fullday", label: "Full day", icon: Sun },
+  { id: "weekend", label: "Weekend", icon: CalendarDays },
 ];
 
 export default function Step2TimeAvailable({
@@ -33,10 +33,10 @@ export default function Step2TimeAvailable({
     <View className="flex-1 bg-gray-50">
       <ScrollView className="flex-1 px-5 pt-5">
         <Text className="text-3xl font-bold text-gray-900 mb-2">
-          Сколько времени?
+          How much time?
         </Text>
         <Text className="text-base text-gray-600 mb-8">
-          Подберём план под ваш темп
+          We'll tailor a plan to suit your pace.
         </Text>
 
         <View className="flex-row flex-wrap gap-3">
@@ -60,7 +60,7 @@ export default function Step2TimeAvailable({
           activeOpacity={0.85}
           style={{ backgroundColor: canProceed ? "#4A90E2" : "#D1D5DB" }}
         >
-          <Text className="text-white text-base font-semibold">Далее</Text>
+          <Text className="text-white text-base font-semibold">Next</Text>
         </TouchableOpacity>
       </View>
     </View>

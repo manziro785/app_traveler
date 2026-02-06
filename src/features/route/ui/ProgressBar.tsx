@@ -24,7 +24,7 @@ export default function ProgressBar({
 
       <View className="flex-1 mx-4">
         <Text className="text-sm font-bold text-blue-600 mb-2 text-left">
-          Шаг {currentStep} из {totalSteps}
+          Step {currentStep} from {totalSteps}
         </Text>
 
         <View className="h-1.5 bg-gray-300 rounded-full overflow-hidden">

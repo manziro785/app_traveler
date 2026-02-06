@@ -43,7 +43,7 @@ export function RegisterForm() {
           render={({ field: { value, onChange, onBlur } }) => (
             <TextInput
               className="flex-1 text-white text-base pl-2"
-              placeholder="Имя"
+              placeholder="Name"
               placeholderTextColor="#BAE6FD"
               value={value}
               onChangeText={onChange}
@@ -87,7 +87,7 @@ export function RegisterForm() {
           render={({ field: { value, onChange, onBlur } }) => (
             <TextInput
               className="flex-1 text-white text-base pl-2"
-              placeholder="Пароль"
+              placeholder="Password"
               placeholderTextColor="#BAE6FD"
               value={value}
               onChangeText={onChange}
@@ -120,7 +120,7 @@ export function RegisterForm() {
           render={({ field: { value, onChange, onBlur } }) => (
             <TextInput
               className="flex-1 text-white text-base pl-2"
-              placeholder="Подтверди пароль"
+              placeholder="Confirm password"
               placeholderTextColor="#BAE6FD"
               value={value}
               onChangeText={onChange}
@@ -164,9 +164,8 @@ export function RegisterForm() {
               {value && <View className="w-2.5 h-2.5 bg-blue-600 rounded-sm" />}
             </View>
             <Text className="flex-1 text-white text-sm">
-              Я согласен с{" "}
-              <Text className="underline">условиями использования</Text> и{" "}
-              <Text className="underline">политикой конфиденциальности</Text>
+              I agree with <Text className="underline">terms of using</Text> and{" "}
+              <Text className="underline">privacy policy</Text>
             </Text>
           </TouchableOpacity>
         )}
@@ -184,7 +183,7 @@ export function RegisterForm() {
         onPress={handleSubmit(onSubmit)}
       >
         <Text className="text-blue-600 text-lg font-semibold">
-          {isLoading ? "Создаём..." : "Создать аккаунт"}
+          {isLoading ? "Creating..." : "Create account"}
         </Text>
       </TouchableOpacity>
     </View>

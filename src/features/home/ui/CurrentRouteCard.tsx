@@ -1,7 +1,7 @@
 import { Link } from "expo-router";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import useGetRoutes from "../../route/model/useRoute";
+import { useGetRoutes } from "../../route/model/useRoute";
 import RouteCard from "../../route/ui/RouteCard";
 
 const CurrentRouteCard = () => {
@@ -12,7 +12,7 @@ const CurrentRouteCard = () => {
     <View className="bg-white rounded-3xl p-5 shadow-sm mb-4">
       <View className="flex-row items-center justify-between mb-4">
         <View>
-          <Text className="text-gray-900 font-bold text-lg">Мои маршруты</Text>
+          <Text className="text-gray-900 font-bold text-lg">My routes</Text>
           <Text className="text-gray-500 text-sm">{routes.length} active</Text>
         </View>
         <Link asChild href="/(tabs)/route">
