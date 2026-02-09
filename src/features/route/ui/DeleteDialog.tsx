@@ -1,45 +1,100 @@
-import { MoreVertical } from "lucide-react-native";
-import { AlertDialog, Button, XStack, YStack } from "tamagui";
+import { AlertCircle, X } from "lucide-react-native";
+import { Modal, Pressable, Text, View } from "react-native";
 import { useDeleteRoute } from "../model/useRoute";
 
-export function AlertDialogDemo({ id }: { id: string }) {
+interface DeleteDialogProps {
+  id: string;
+  visible: boolean;
+  onClose: () => void;
+}
+
+export function DeleteDialog({ id, visible, onClose }: DeleteDialogProps) {
   const { mutateAsync, isPending } = useDeleteRoute();
 
-  // const onDelete = () => mutateAsync(id);
+  const handleDelete = async () => {
+    try {
+      console.log("=== DELETE START ===");
+      console.log("Deleting route with ID:", id);
+
+      await mutateAsync(id);
+
+      console.log("=== DELETE SUCCESS ===");
+      onClose();
+    } catch (error) {
+      console.error("=== DELETE ERROR ===", error);
+      alert(
+        "Error: " + (error instanceof Error ? error.message : String(error)),
+      );
+    }
+  };
 
   return (
-    <AlertDialog native>
-      <AlertDialog.Trigger asChild>
-        <MoreVertical color="#999" size={16} />
-      </AlertDialog.Trigger>
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={visible}
+      onRequestClose={onClose}
+    >
+      <Pressable
+        className="flex-1 bg-black/60 justify-center items-center px-5"
+        onPress={onClose}
+      >
+        <Pressable onPress={(e) => e.stopPropagation()}>
+          <View className="bg-white dark:bg-gray-900 rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl">
+            {/* Close Button */}
+            <Pressable
+              onPress={onClose}
+              className="absolute top-4 right-4 z-10 p-1 active:opacity-50"
+            >
+              <X color="#999" size={24} />
+            </Pressable>
 
-      <AlertDialog.Portal>
-        <AlertDialog.Overlay key="overlay" opacity={0.5} />
-        <AlertDialog.Content elevate key="content">
-          <YStack gap="$4">
-            <AlertDialog.Title>Delete</AlertDialog.Title>
-            <AlertDialog.Description>
-              Are you sure you want to delete?
-            </AlertDialog.Description>
+            {/* Icon */}
+            <View className="items-center pt-8 pb-4">
+              <View className="bg-red-100 dark:bg-red-900/30 p-4 rounded-full">
+                <AlertCircle color="#ef4444" size={40} />
+              </View>
+            </View>
 
-            <XStack gap="$3" justify="flex-end">
-              <AlertDialog.Cancel asChild>
-                <Button disabled={isPending}>Cancel</Button>
-              </AlertDialog.Cancel>
+            {/* Content */}
+            <View className="px-6 pb-6">
+              <Text className="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
+                Delete Route?
+              </Text>
 
-              <AlertDialog.Action asChild>
-                <Button
-                  theme="accent"
+              <Text className="text-base text-gray-600 dark:text-gray-400 mb-6 text-center leading-6">
+                This action cannot be undone. The route will be permanently
+                deleted.
+              </Text>
+
+              {/* Buttons */}
+              <View className="gap-3">
+                <Pressable
+                  onPress={handleDelete}
                   disabled={isPending}
-                  onPress={() => mutateAsync(id)}
+                  className={`py-4 bg-red-500 rounded-xl active:opacity-80 ${
+                    isPending ? "opacity-50" : ""
+                  }`}
                 >
-                  {isPending ? "Deleting..." : "Delete"}
-                </Button>
-              </AlertDialog.Action>
-            </XStack>
-          </YStack>
-        </AlertDialog.Content>
-      </AlertDialog.Portal>
-    </AlertDialog>
+                  <Text className="text-white font-bold text-base text-center">
+                    {isPending ? "Deleting..." : "Delete Route"}
+                  </Text>
+                </Pressable>
+
+                <Pressable
+                  onPress={onClose}
+                  disabled={isPending}
+                  className="py-4 bg-gray-100 dark:bg-gray-800 rounded-xl active:opacity-70"
+                >
+                  <Text className="text-gray-700 dark:text-gray-200 font-semibold text-base text-center">
+                    Cancel
+                  </Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Pressable>
+      </Pressable>
+    </Modal>
   );
 }

@@ -1,12 +1,19 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { Clock, MapPin, Users } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import { AlertDialogDemo } from "./DeleteDialog";
+import { RouteOptionsMenu } from "./RouteOptionsMenu";
 
 const RouteCard = ({ route }) => {
+  const router = useRouter();
   const price = route.params.duration / 60;
+
+  const handleEdit = () => {
+    console.log("Editing route:", route.id);
+    router.push(`/editRoute/${route.id}`);
+  };
+
   return (
     <Link href={`/route/${route.id}`} asChild>
       <TouchableOpacity>
@@ -58,7 +65,7 @@ const RouteCard = ({ route }) => {
                     {route.status}
                   </Text>
                 </View>
-                <AlertDialogDemo id={route.id} />
+                <RouteOptionsMenu id={route.id} onEdit={handleEdit} />
               </View>
             </View>
             <View className="flex-row items-center gap-4 mb-2">

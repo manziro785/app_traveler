@@ -1,14 +1,13 @@
 import { config } from "@/tamagui.config";
 import { TamaguiProvider } from "@tamagui/core";
+import "@tamagui/native/setup-zeego";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import { queryClient } from "../app_core/lib/QueryClient";
 import "../app_core/styles/global.css";
 
 export default function RootLayout() {
-  const clientId_key = process.env.CLIENT_ID;
   return (
-    // <GoogleOAuthProvider clientId={clientId_key}>
     <TamaguiProvider config={config} defaultTheme="light">
       <QueryClientProvider client={queryClient}>
         <Stack>
@@ -19,9 +18,12 @@ export default function RootLayout() {
           <Stack.Screen name="register" options={{ headerShown: false }} />
           <Stack.Screen name="chat" options={{ headerShown: false }} />
           <Stack.Screen name="createRoute" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="editRoute/[id]"
+            options={{ headerShown: false }}
+          />
         </Stack>
       </QueryClientProvider>
     </TamaguiProvider>
-    // </GoogleOAuthProvider>
   );
 }

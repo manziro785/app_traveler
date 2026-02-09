@@ -37,8 +37,8 @@ const WeatherCard = () => {
               <Text className="text-white/80 text-sm">Bishkek</Text>
             </View>
           </View>
-          <View className="flex-1 ml-4">
-            <Text className="text-white/90 text-xs text-right">
+          <View className="flex-1 ml-5">
+            <Text className="text-white/90 text-sm text-right">
               {data.recommendations}
             </Text>
           </View>

@@ -2,3 +2,4 @@
 @tailwind components;
 @tailwind utilities;
 @import "@tamagui/core";
+@import "@tamagui/native/setup-zeego";

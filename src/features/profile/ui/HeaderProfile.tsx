@@ -2,7 +2,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { ChevronLeft, Edit3, User } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import useGetProfileQuery from "../model/useProfile";
+import { useGetProfileQuery } from "../model/useProfile";
 
 const HeaderProfile = () => {
   const { data, isLoading } = useGetProfileQuery();

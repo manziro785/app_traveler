@@ -17,11 +17,13 @@ export const getRouteById = async (idRoute: string) => {
 };
 
 export const deleteRoute = async (idRoute: string) => {
+  console.log("Deleting route with ID:", idRoute);
+  console.log("Full URL:", `/routes/${idRoute}`);
   const res = await api.delete(`/routes/${idRoute}`);
   return res.data.data;
 };
 
-export const editRoute = async (idRoute: string) => {
-  const res = await api.put(`/routes/${idRoute}`);
+export const editRoute = async (idRoute: string, params: RouteType) => {
+  const res = await api.put(`/routes/${idRoute}`, params);
   return res.data.data;
 };

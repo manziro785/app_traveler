@@ -1,6 +1,7 @@
 import { useGetRouteById } from "@/src/features/route/model/useRoute";
+import { RouteOptionsMenu } from "@/src/features/route/ui/RouteOptionsMenu";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link, useLocalSearchParams } from "expo-router";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import {
   Camera,
   ChevronDown,
@@ -9,13 +10,10 @@ import {
   Clock,
   Coffee,
   DollarSign,
-  Heart,
   Landmark,
   Lightbulb,
   Map,
   MessageCircle,
-  MoreVertical,
-  Museum,
   Music,
   Palmtree,
   ShoppingBag,
@@ -36,8 +34,8 @@ const Reel = () => {
   const { id } = useLocalSearchParams();
   const { data, isLoading } = useGetRouteById(id);
   const [expandedItems, setExpandedItems] = useState({});
+  const router = useRouter();
 
-  // Массив иконок
   const icons = [
     Coffee,
     UtensilsCrossed,
@@ -47,10 +45,8 @@ const Reel = () => {
     ShoppingBag,
     Music,
     Palmtree,
-    Museum,
   ];
 
-  // Массив цветов
   const colors = [
     "bg-red-500",
     "bg-blue-500",
@@ -63,7 +59,6 @@ const Reel = () => {
     "bg-yellow-500",
   ];
 
-  // Генерируем рандомные иконки и цвета для каждого места (мемоизируем, чтобы не менялись при ререндере)
   const placeStyles = useMemo(() => {
     if (!data?.places) return {};
 
@@ -89,6 +84,10 @@ const Reel = () => {
     }));
   };
 
+  const handleEdit = () => {
+    router.push(`/editRoute/${data.id}`);
+  };
+
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor="#3b82f6" />
@@ -101,15 +100,12 @@ const Reel = () => {
         <View className="flex-row items-center justify-between mb-4">
           <TouchableOpacity className="p-2">
             <Link href="/(tabs)/route">
-              <ChevronLeft color="#fff" size={24} />{" "}
+              <ChevronLeft color="#fff" size={24} />
             </Link>
           </TouchableOpacity>
           <View className="flex-row gap-3">
             <TouchableOpacity className="p-2">
-              <Heart color="#fff" size={24} />
-            </TouchableOpacity>
-            <TouchableOpacity className="p-2">
-              <MoreVertical color="#fff" size={24} />
+              <RouteOptionsMenu id={data.id} onEdit={handleEdit} />
             </TouchableOpacity>
           </View>
         </View>
@@ -144,14 +140,14 @@ const Reel = () => {
         </View>
       </LinearGradient>
 
-      <View className="bg-white mx-4 -mt-6 rounded-xl px-4 py-3 shadow-sm mb-4">
-        <TouchableOpacity className="flex-row items-center justify-center gap-2">
+      <Link href="/chat" asChild>
+        <TouchableOpacity className="flex-row items-center justify-center gap-2 bg-white mx-4 -mt-6 rounded-xl px-4 py-3 shadow-sm mb-4">
           <MessageCircle color="#3b82f6" size={20} />
           <Text className="text-blue-600 font-medium">
             Ask AI for directions
           </Text>
         </TouchableOpacity>
-      </View>
+      </Link>
 
       <ScrollView className="flex-1 px-4" showsVerticalScrollIndicator={false}>
         <View className="relative pb-24">

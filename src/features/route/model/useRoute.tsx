@@ -14,6 +14,7 @@ export const useRouteCreate = () => {
   const router = useRouter();
 
   const handleSuccess = () => {
+    queryClient.invalidateQueries({ queryKey: ["route"] });
     router.push("/(tabs)/route");
   };
 
@@ -49,7 +50,7 @@ export const useEditRoute = (id: string) => {
   };
 
   return useMutation({
-    mutationFn: (id) => editRoute(id),
+    mutationFn: (params: RouteType) => editRoute(id, params),
     onSuccess: handleSuccess,
     onError: handleError,
   });
@@ -57,24 +58,24 @@ export const useEditRoute = (id: string) => {
 
 export const useDeleteRoute = () => {
   return useMutation({
-    mutationFn: (id: string) => deleteRoute(id),
-    onSuccess: (_data, id) => {
-      queryClient.invalidateQueries({ queryKey: ["routes"] });
-      queryClient.removeQueries({ queryKey: ["routes", id] });
+    mutationFn: (idRoute: string) => deleteRoute(idRoute),
+    onSuccess: (_data, idRoute) => {
+      queryClient.invalidateQueries({ queryKey: ["route"] });
+      queryClient.removeQueries({ queryKey: ["route", idRoute] });
     },
   });
 };
 
 export const useGetRoutes = () => {
   return useQuery({
-    queryKey: ["routes"],
+    queryKey: ["route"],
     queryFn: getRoutes,
   });
 };
 
 export const useGetRouteById = (idRoute: string) => {
   return useQuery({
-    queryKey: ["routes", idRoute],
+    queryKey: ["route", idRoute],
     queryFn: async () => getRouteById(idRoute),
     enabled: !!idRoute,
   });
