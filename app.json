@@ -1,13 +1,13 @@
 {
   "expo": {
     "name": "Trip AI",
-    "slug": "Trip AI",
+    "slug": "trip-ai",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "instamat",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "ios": {
       "supportsTablet": true
     },
@@ -53,9 +53,11 @@
       "reactCompiler": true
     },
     "extra": {
-      "router": {},
+      "router": {
+        "root": "src/app"
+      },
       "eas": {
-        "projectId": "ddd5652b-9574-4a39-99d6-498105cf5891"
+        "projectId": "22d613a5-0347-4c5f-8d2c-ae652ad02b70"
       }
     }
   }

@@ -1,50 +1,70 @@
-# Welcome to your Expo app 👋
+# Trip AI (Instamat)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+AI-powered travel planning app built with Expo Router. Create personalized routes, explore destinations on a map, and get contextual recommendations like weather-aware tips.
 
-## Get started
+**Concept**
+Trip AI helps travelers build smart, shareable itineraries by combining user preferences, location context, and AI recommendations into a clean mobile experience.
 
-1. Install dependencies
+**Key Features**
+- AI route creation with multi-step preferences flow
+- Explore destinations and route details
+- Map-based discovery
+- Weather recommendations for a given location
+- Auth flow with token-based API access
+- Profile and stats
 
-   ```bash
-   npm install
-   ```
+**Tech Stack**
+- Expo + React Native + Expo Router
+- TypeScript
+- React Query for data fetching and caching
+- Zustand for client state
+- Axios for API communication
+- Tamagui + NativeWind for UI
 
-2. Start the app
+**Project Structure**
+- `src/app` Expo Router screens and layouts
+- `src/features` Feature modules (auth, home, route, map, chat, profile)
+- `src/shared` Shared API, UI, and state utilities
+- `assets` App icons and images
 
-   ```bash
-   npx expo start
-   ```
+**Prerequisites**
+- Node.js LTS
+- Expo CLI (`npx expo`)
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+**Environment Variables**
+Create `.env.development` with:
+```env
+EXPO_PUBLIC_API_URL=https://trip-ai-backend-xtnc.onrender.com/api
+EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID="..."
+EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID="..."
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Notes:
+- `EXPO_PUBLIC_*` variables are bundled into the client app.
+- The backend must have `OPENWEATHER_API_KEY` configured for weather recommendations.
 
-## Learn more
+**Install**
+```bash
+npm install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+**Run**
+```bash
+npm run start
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+**Scripts**
+- `npm run start` Start Expo dev server
+- `npm run android` Open on Android
+- `npm run ios` Open on iOS simulator
+- `npm run web` Run web build
+- `npm run lint` Lint project
 
-## Join the community
+**API**
+The app expects a backend compatible with these routes:
+- `GET /insights/random`
+- `GET /weather/recommendations?lat={lat}&lng={lng}`
+- `GET /users/stats`
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+**Status**
+Active development.
