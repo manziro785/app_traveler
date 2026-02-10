@@ -2,6 +2,7 @@ import { queryClient } from "@/src/app_core/lib/QueryClient";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   editProfile,
+  getPlaces,
   getProfile,
   getWishlist,
   postWishlist,
@@ -35,6 +36,13 @@ export const useGetWishlistQuery = () => {
   return useQuery({
     queryKey: ["users", "wishlist"],
     queryFn: getWishlist,
+  });
+};
+
+export const useGetPlacesQuery = () => {
+  return useQuery({
+    queryKey: ["places"],
+    queryFn: getPlaces,
   });
 };
 

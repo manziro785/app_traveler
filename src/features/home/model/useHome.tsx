@@ -17,7 +17,7 @@ export const useGetWeatherQuery = () => {
 
 export const useGetStatsQuery = () => {
   return useQuery({
-    queryKey: ["stats"],
+    queryKey: ["stats", "wishlist"],
     queryFn: fetchStats,
   });
 };

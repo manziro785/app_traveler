@@ -1,4 +1,3 @@
-// src/features/ai/model/useChat.ts
 import { useMutation } from "@tanstack/react-query";
 import { chatActions } from "../api/ai";
 

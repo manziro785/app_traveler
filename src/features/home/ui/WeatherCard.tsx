@@ -1,6 +1,7 @@
 import { Sun } from "lucide-react-native";
 import React, { useEffect, useRef } from "react";
 import { Animated, Easing, Text, View } from "react-native";
+import { Skeleton } from "@/src/shared/ui/Skeleton";
 import { useGetWeatherQuery } from "../model/useHome";
 
 const WeatherCard = () => {
@@ -16,7 +17,25 @@ const WeatherCard = () => {
       }),
     ).start();
   }, []);
-  if (isLoading) return <Text>loading...</Text>;
+  if (isLoading) {
+    return (
+      <View className="bg-white/10 backdrop-blur-lg rounded-3xl p-4 mt-5">
+        <View className="flex-row items-center justify-between">
+          <View className="flex-row items-center">
+            <Skeleton width={32} height={32} rounded="full" />
+            <View className="ml-3">
+              <Skeleton width={64} height={20} rounded="md" className="mb-2" />
+              <Skeleton width={48} height={12} rounded="md" />
+            </View>
+          </View>
+          <View className="flex-1 ml-5 items-end">
+            <Skeleton width="80%" height={12} rounded="md" className="mb-2" />
+            <Skeleton width="70%" height={12} rounded="md" />
+          </View>
+        </View>
+      </View>
+    );
+  }
 
   const rotate = rotateAnim.interpolate({
     inputRange: [0, 1],

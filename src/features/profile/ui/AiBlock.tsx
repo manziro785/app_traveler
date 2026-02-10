@@ -1,69 +1,112 @@
-import { Check, Edit2 } from "lucide-react-native";
+import { useGetWishlistQuery } from "@/src/features/profile/model/useProfile";
+import { useRouter } from "expo-router";
+import { Heart, MapPin } from "lucide-react-native";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Skeleton } from "@/src/shared/ui/Skeleton";
 
 const AiBlock = () => {
+  const router = useRouter();
+  const { data: wishlist, isLoading } = useGetWishlistQuery();
+
   return (
     <View className="mb-4">
       <View className="bg-white rounded-3xl p-5 shadow-sm">
-        <View className="flex-row items-center justify-between mb-4">
-          <View className="flex-row items-center">
-            <View className=" bg-blue-500 rounded-full items-center justify-center mr-2 p-1">
-              <Check color="white" size={15} />
-            </View>
-            <Text className="text-gray-900 font-bold text-base">
-              AI knows about you:
-            </Text>
-          </View>
-          <TouchableOpacity className="p-2">
-            <Edit2 color="#3b82f6" size={18} />
-          </TouchableOpacity>
-        </View>
-
-        <View className="space-y-2">
-          <View className="flex-row gap-2">
-            <View className="flex-1 bg-teal-50 px-3 py-2.5 rounded-xl flex-row items-center">
-              <Text className="text-base mr-2">🏞️</Text>
-              <Text className="text-teal-700 text-sm font-medium flex-1">
-                Природа и активности
+        <View className=" pt-2">
+          <View className="flex-row items-center justify-between mb-6">
+            <View className="flex-row items-center">
+              <Heart color="#ef4444" fill="#ef4444" size={16} />
+              <Text className="text-gray-900 font-bold text-base ml-2">
+                My Wishlist
               </Text>
             </View>
-            <View className="flex-1 bg-red-50 px-3 py-2.5 rounded-xl flex-row items-center">
-              <Text className="text-base mr-2">🍽️</Text>
-              <Text className="text-red-700 text-sm font-medium flex-1">
-                Еда и кафе
+            <TouchableOpacity onPress={() => router.push("/explore")}>
+              <Text className="text-blue-600 text-xs font-medium">See All</Text>
+            </TouchableOpacity>
+          </View>
+
+          {isLoading ? (
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <View className="flex-row gap-3">
+                {[1, 2, 3].map((i) => (
+                  <View
+                    key={i}
+                    className="w-32 bg-gray-50 rounded-xl overflow-hidden"
+                  >
+                    <Skeleton width="100%" height={96} rounded="md" />
+                    <View className="p-2">
+                      <Skeleton width="80%" height={12} rounded="md" className="mb-2" />
+                      <Skeleton width="60%" height={10} rounded="md" />
+                    </View>
+                  </View>
+                ))}
+              </View>
+            </ScrollView>
+          ) : wishlist && wishlist.length > 0 ? (
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <View className="flex-row gap-3">
+                {wishlist.slice(0, 5).map((item: any) => {
+                  const place = item.place || item;
+                  return (
+                    <View
+                      key={item.id}
+                      className="w-32 bg-gray-50 rounded-xl overflow-hidden"
+                    >
+                      <Image
+                        source={{
+                          uri:
+                            place.photos?.[0] ||
+                            "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=150",
+                        }}
+                        className="w-full h-24"
+                        resizeMode="cover"
+                      />
+                      <View className="p-2">
+                        <Text
+                          className="text-gray-900 font-semibold text-xs"
+                          numberOfLines={1}
+                        >
+                          {place.name}
+                        </Text>
+                        {place.address && (
+                          <View className="flex-row items-center gap-1 mt-1">
+                            <MapPin color="#9ca3af" size={10} />
+                            <Text
+                              className="text-gray-500 text-xs"
+                              numberOfLines={1}
+                            >
+                              {place.address}
+                            </Text>
+                          </View>
+                        )}
+                      </View>
+                    </View>
+                  );
+                })}
+              </View>
+            </ScrollView>
+          ) : (
+            <View className="bg-gray-50 rounded-xl p-4 items-center">
+              <Heart color="#d1d5db" size={32} />
+              <Text className="text-gray-500 text-sm mt-2 text-center">
+                No places in wishlist yet
               </Text>
+              <TouchableOpacity
+                onPress={() => router.push("/explore")}
+                className="mt-3 bg-blue-500 px-4 py-2 rounded-lg active:opacity-80"
+              >
+                <Text className="text-white text-sm font-semibold">
+                  Explore Places
+                </Text>
+              </TouchableOpacity>
             </View>
-          </View>
-
-          <View className="bg-purple-50 px-3 py-2.5 rounded-xl flex-row items-center">
-            <Text className="text-base mr-2">🏛️</Text>
-            <Text className="text-purple-700 text-sm font-medium">
-              История и культура
-            </Text>
-          </View>
-
-          <View className="flex-row gap-2 mt-2">
-            <View className="flex-1 bg-gray-50 px-3 py-2.5 rounded-xl flex-row items-center">
-              <Text className="text-base mr-2">💰</Text>
-              <Text className="text-gray-700 text-sm">Бюджет: Средний</Text>
-            </View>
-            <View className="flex-1 bg-gray-50 px-3 py-2.5 rounded-xl flex-row items-center">
-              <Text className="text-base mr-2">👥</Text>
-              <Text className="text-gray-700 text-sm">Обычно: Пара</Text>
-            </View>
-          </View>
-
-          <View className="flex-row gap-2">
-            <View className="flex-1 bg-gray-50 px-3 py-2.5 rounded-xl flex-row items-center">
-              <Text className="text-base mr-2">🎒</Text>
-              <Text className="text-gray-700 text-sm">Форма: Средняя</Text>
-            </View>
-            <View className="flex-1 bg-gray-50 px-3 py-2.5 rounded-xl flex-row items-center">
-              <Text className="text-base mr-2">🚗</Text>
-              <Text className="text-gray-700 text-sm">Без машины</Text>
-            </View>
-          </View>
+          )}
         </View>
       </View>
     </View>

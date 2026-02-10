@@ -9,6 +9,7 @@ import { Bot, LogOut, Plus } from "lucide-react-native";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
+  const logout = useLogout();
   return (
     <>
       <ScrollView
@@ -31,7 +32,7 @@ export default function Index() {
 
               <TouchableOpacity
                 className="bg-white/20 p-3 rounded-2xl"
-                onPress={useLogout}
+                onPress={logout}
                 activeOpacity={0.8}
               >
                 <LogOut color="white" size={15} />

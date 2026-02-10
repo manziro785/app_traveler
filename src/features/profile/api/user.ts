@@ -16,6 +16,11 @@ export const getWishlist = async () => {
 };
 
 export const postWishlist = async (formData) => {
-  const res = await api.get("/users/wishlist", formData);
+  const res = await api.post("/users/wishlist", formData);
+  return res.data.data;
+};
+
+export const getPlaces = async () => {
+  const res = await api.get("/places");
   return res.data.data;
 };
