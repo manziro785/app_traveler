@@ -1,10 +1,12 @@
 import StatsCard from "@/src/features/home/ui/StatsCard";
 import { useGetRoutes } from "@/src/features/route/model/useRoute";
 import RouteCard from "@/src/features/route/ui/RouteCard";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { ChevronLeft } from "lucide-react-native";
 import React from "react";
 import { Skeleton } from "@/src/shared/ui/Skeleton";
+import { ErrorState } from "@/src/shared/ui/ErrorState";
+import { EmptyState } from "@/src/shared/ui/EmptyState";
 import {
   ScrollView,
   StatusBar,
@@ -14,7 +16,8 @@ import {
 } from "react-native";
 
 const Route = () => {
-  const { data: routes, isLoading } = useGetRoutes();
+  const router = useRouter();
+  const { data: routesData, isLoading, isError, refetch } = useGetRoutes();
   if (isLoading) {
     return (
       <>
@@ -48,6 +51,18 @@ const Route = () => {
           </View>
         </ScrollView>
       </>
+    );
+  }
+  const routes = routesData ?? [];
+  if (isError) {
+    return (
+      <View className="flex-1 bg-white px-4 pt-20">
+        <ErrorState
+          title="Failed to load routes"
+          actionLabel="Retry"
+          onAction={refetch}
+        />
+      </View>
     );
   }
 
@@ -84,9 +99,16 @@ const Route = () => {
         </View>
 
         <View className="p-4 px-6 gap-3 pb-24">
-          {routes.map((route) => (
-            <RouteCard key={route.id} route={route} />
-          ))}
+          {routes.length === 0 ? (
+            <EmptyState
+              title="No routes yet"
+              description="Create your first route to see it here."
+              actionLabel="Create route"
+              onAction={() => router.push("/createRoute")}
+            />
+          ) : (
+            routes.map((route) => <RouteCard key={route.id} route={route} />)
+          )}
         </View>
       </ScrollView>
     </>

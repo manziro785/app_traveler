@@ -16,3 +16,7 @@ export interface GoogleUser {
   name: string;
   picture: string;
 }
+
+export type AuthResponse = {
+  token: string;
+};

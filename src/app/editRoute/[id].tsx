@@ -2,6 +2,7 @@ import {
   useEditRoute,
   useGetRouteById,
 } from "@/src/features/route/model/useRoute";
+import type { RouteEntity } from "@/src/features/route/model/route.type";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ChevronLeft, Plus, Save, Trash2 } from "lucide-react-native";
@@ -18,13 +19,47 @@ import {
   View,
 } from "react-native";
 
-const EditRoute = () => {
-  const { id } = useLocalSearchParams();
-  const router = useRouter();
-  const { data, isLoading } = useGetRouteById(id as string);
-  const { mutateAsync, isPending } = useEditRoute(id as string);
+type EditablePlace = {
+  placeId: string;
+  name: string;
+  description: string;
+  category?: string | null;
+  startTime: string;
+  endTime: string;
+  duration: number;
+  estimatedCost: number;
+  tips?: string;
+  photoSpot?: string;
+  transportFromPrevious?: string | null;
+};
 
-  const [formData, setFormData] = useState({
+type EditRouteForm = {
+  name: string;
+  description: string;
+  status: string;
+  scheduledDate: string;
+  scheduledTime: string;
+  endTime: string;
+  params: {
+    mode: string;
+    mood: string[];
+    budget: string;
+    duration: string;
+    location: string;
+    companions: string;
+    transportation: string;
+  };
+  places: EditablePlace[];
+};
+
+const EditRoute = () => {
+  const { id } = useLocalSearchParams<{ id?: string }>();
+  const routeId = Array.isArray(id) ? id[0] : id;
+  const router = useRouter();
+  const { data, isLoading } = useGetRouteById(routeId ?? "");
+  const { mutateAsync, isPending } = useEditRoute(routeId ?? "");
+
+  const [formData, setFormData] = useState<EditRouteForm>({
     name: "",
     description: "",
     status: "",
@@ -40,7 +75,7 @@ const EditRoute = () => {
       companions: "",
       transportation: "",
     },
-    places: [] as any[],
+    places: [],
   });
 
   useEffect(() => {
@@ -61,7 +96,7 @@ const EditRoute = () => {
           companions: data.params?.companions || "",
           transportation: data.params?.transportation || "",
         },
-        places: data.places || [],
+        places: (data.places as EditablePlace[]) || [],
       });
     }
   }, [data]);
@@ -152,7 +187,11 @@ const EditRoute = () => {
     ]);
   };
 
-  const updatePlace = (index: number, field: string, value: any) => {
+  const updatePlace = <K extends keyof EditablePlace>(
+    index: number,
+    field: K,
+    value: EditablePlace[K],
+  ) => {
     const newPlaces = [...formData.places];
     newPlaces[index] = { ...newPlaces[index], [field]: value };
     setFormData({ ...formData, places: newPlaces });

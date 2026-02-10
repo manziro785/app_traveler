@@ -70,7 +70,7 @@ const Chat = () => {
           text:
             response.message ||
             response.data?.message ||
-            "Извините, не понял ваш вопрос.",
+            "Sorry, I didn’t understand your question.",
           timestamp: new Date(),
           suggestions: response.suggestions,
           actions: response.actions,
@@ -83,7 +83,7 @@ const Chat = () => {
         const errorMessage: Message = {
           id: `error-${Date.now()}`,
           type: "ai",
-          text: "Упс! Что-то пошло не так. Попробуйте ещё раз.",
+          text: "Oops! Something went wrong. Please try again.",
           timestamp: new Date(),
         };
 
@@ -97,7 +97,7 @@ const Chat = () => {
   };
 
   const formatTime = (date: Date) => {
-    return date.toLocaleTimeString("ru-RU", {
+    return date.toLocaleTimeString("en-US", {
       hour: "2-digit",
       minute: "2-digit",
     });
@@ -128,7 +128,7 @@ const Chat = () => {
               </Text>
               <View className="flex-row items-center gap-1">
                 <View className="w-2 h-2 bg-green-500 rounded-full" />
-                <Text className="text-gray-500 text-xs">Онлайн</Text>
+                <Text className="text-gray-500 text-xs">Online</Text>
               </View>
             </View>
           </View>
@@ -231,7 +231,7 @@ const Chat = () => {
         <View className="flex-row items-end gap-2 bg-gray-100 rounded-2xl px-4 py-2">
           <TextInput
             className="flex-1 text-gray-900 text-base py-2 max-h-24"
-            placeholder="Ask somethinga..."
+            placeholder="Ask something..."
             placeholderTextColor="#9CA3AF"
             value={message}
             onChangeText={setMessage}
@@ -256,7 +256,7 @@ const Chat = () => {
           </TouchableOpacity>
         </View>
         <Text className="text-gray-400 text-xs mt-2 text-center">
-          AI может допускать ошибки
+          AI can make mistakes
         </Text>
       </View>
     </KeyboardAvoidingView>

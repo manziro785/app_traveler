@@ -28,10 +28,9 @@ export default function CreateRoute() {
 
     try {
       await submitRoute(flow.payload);
-      router.push("/(tabs)");
     } catch (e) {
       console.error(e);
-      Alert.alert("Ошибка", "Не удалось создать маршрут. Попробуйте снова.");
+      Alert.alert("Error", "Failed to create the route. Please try again.");
     }
   };
 

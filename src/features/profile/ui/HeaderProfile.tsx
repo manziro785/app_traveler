@@ -13,7 +13,7 @@ import { Skeleton } from "@/src/shared/ui/Skeleton";
 
 const HeaderProfile = () => {
   const router = useRouter();
-  const { data, isLoading } = useGetProfileQuery();
+  const { data, isLoading, isError, refetch } = useGetProfileQuery();
 
   if (isLoading) {
     return (
@@ -35,6 +35,28 @@ const HeaderProfile = () => {
             <Skeleton width={140} height={20} rounded="md" className="mb-2" />
             <Skeleton width={160} height={12} rounded="md" />
           </View>
+        </View>
+      </LinearGradient>
+    );
+  }
+  if (isError) {
+    return (
+      <LinearGradient
+        colors={["#2563EB", "#06B6D4"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        className="px-6 pt-14 pb-24"
+      >
+        <View className="items-center">
+          <Text className="text-white text-base font-semibold mb-2">
+            Failed to load profile
+          </Text>
+          <TouchableOpacity
+            onPress={() => refetch()}
+            className="bg-white/20 px-4 py-2 rounded-xl"
+          >
+            <Text className="text-white font-semibold">Retry</Text>
+          </TouchableOpacity>
         </View>
       </LinearGradient>
     );

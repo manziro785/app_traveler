@@ -46,7 +46,7 @@ export default function Step2TimeAvailable({
               label={o.label}
               icon={o.icon}
               isSelected={form.timeAvailable === o.id}
-              onPress={() => update("timeAvailable", o.id as any)}
+              onPress={() => update("timeAvailable", o.id)}
             />
           ))}
         </View>

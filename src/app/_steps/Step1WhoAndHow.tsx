@@ -13,16 +13,18 @@ import {
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-type Option = { id: string; label: string; icon: LucideIcon };
+type Option<T extends string> = { id: T; label: string; icon: LucideIcon };
+type CompanionsId = Exclude<FormData["companions"], null>;
+type TransportationId = Exclude<FormData["transportation"], null>;
 
-const companionsOptions: Option[] = [
+const companionsOptions: Option<CompanionsId>[] = [
   { id: "alone", label: "Alone", icon: User },
   { id: "couple", label: "Couple", icon: Users },
   { id: "family", label: "Family", icon: UsersRound },
   { id: "company", label: "Company", icon: Coffee },
 ];
 
-const transportOptions: Option[] = [
+const transportOptions: Option<TransportationId>[] = [
   { id: "walking", label: "Walking", icon: User },
   { id: "car", label: "Car", icon: Car },
   { id: "taxi", label: "Taxi", icon: CarTaxiFront },
@@ -60,8 +62,8 @@ export default function Step1WhoAndHow({
                 key={o.id}
                 label={o.label}
                 icon={o.icon}
-                isSelected={form.companions === (o.id as any)}
-                onPress={() => update("companions", o.id as any)}
+                isSelected={form.companions === o.id}
+                onPress={() => update("companions", o.id)}
               />
             ))}
           </View>
@@ -77,8 +79,8 @@ export default function Step1WhoAndHow({
                 key={o.id}
                 label={o.label}
                 icon={o.icon}
-                isSelected={form.transportation === (o.id as any)}
-                onPress={() => update("transportation", o.id as any)}
+                isSelected={form.transportation === o.id}
+                onPress={() => update("transportation", o.id)}
               />
             ))}
           </View>

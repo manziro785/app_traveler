@@ -51,7 +51,7 @@ export default function Step3Location({
               label={o.label}
               icon={o.icon}
               isSelected={form.location === o.id}
-              onPress={() => update("location", o.id as any)}
+              onPress={() => update("location", o.id)}
             />
           ))}
         </View>

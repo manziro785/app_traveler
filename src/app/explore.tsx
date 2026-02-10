@@ -1,9 +1,11 @@
-// app/explore.tsx
+import type { WishlistItem } from "@/src/features/profile/model/profile.type";
 import {
   useGetPlacesQuery,
   useGetWishlistQuery,
   usePostWishlistMutation,
 } from "@/src/features/profile/model/useProfile";
+import type { Place } from "@/src/shared/model/place.type";
+import { ErrorState } from "@/src/shared/ui/ErrorState";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import {
@@ -27,8 +29,18 @@ import {
 
 const Explore = () => {
   const router = useRouter();
-  const { data: places, isLoading: placesLoading } = useGetPlacesQuery();
-  const { data: wishlist, isLoading: wishlistLoading } = useGetWishlistQuery();
+  const {
+    data: places,
+    isLoading: placesLoading,
+    isError: placesError,
+    refetch: refetchPlaces,
+  } = useGetPlacesQuery();
+  const {
+    data: wishlist,
+    isLoading: wishlistLoading,
+    isError: wishlistError,
+    refetch: refetchWishlist,
+  } = useGetWishlistQuery();
   const { mutateAsync, isPending } = usePostWishlistMutation();
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -36,7 +48,7 @@ const Explore = () => {
   const isInWishlist = (placeId: string) => {
     if (!wishlist) return false;
     return wishlist.some(
-      (item: any) =>
+      (item: WishlistItem) =>
         item.placeId === placeId ||
         item.id === placeId ||
         item.place?.id === placeId,
@@ -51,7 +63,7 @@ const Explore = () => {
     }
   };
 
-  const filteredPlaces = places?.filter((place: any) => {
+  const filteredPlaces = places?.filter((place: Place) => {
     const matchesSearch =
       place.name.toLowerCase().includes(search.toLowerCase()) ||
       place.description?.toLowerCase().includes(search.toLowerCase());
@@ -61,7 +73,7 @@ const Explore = () => {
   });
 
   const categories =
-    places?.reduce((acc: string[], place: any) => {
+    places?.reduce((acc: string[], place: Place) => {
       if (place.category?.name && !acc.includes(place.category.name)) {
         acc.push(place.category.name);
       }
@@ -72,6 +84,20 @@ const Explore = () => {
     return (
       <View className="flex-1 justify-center items-center bg-gray-50">
         <ActivityIndicator size="large" color="#3b82f6" />
+      </View>
+    );
+  }
+  if (placesError || wishlistError) {
+    return (
+      <View className="flex-1 justify-center items-center bg-gray-50 px-6">
+        <ErrorState
+          title="Failed to load places"
+          actionLabel="Retry"
+          onAction={() => {
+            refetchPlaces();
+            refetchWishlist();
+          }}
+        />
       </View>
     );
   }

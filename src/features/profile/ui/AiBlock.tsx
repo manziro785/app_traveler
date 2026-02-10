@@ -10,10 +10,17 @@ import {
   View,
 } from "react-native";
 import { Skeleton } from "@/src/shared/ui/Skeleton";
+import type { Place } from "@/src/shared/model/place.type";
+import type { WishlistItem } from "../model/profile.type";
 
 const AiBlock = () => {
   const router = useRouter();
-  const { data: wishlist, isLoading } = useGetWishlistQuery();
+  const {
+    data: wishlist,
+    isLoading,
+    isError,
+    refetch,
+  } = useGetWishlistQuery();
 
   return (
     <View className="mb-4">
@@ -48,11 +55,23 @@ const AiBlock = () => {
                 ))}
               </View>
             </ScrollView>
+          ) : isError ? (
+            <View className="bg-gray-50 rounded-xl p-4 items-center">
+              <Text className="text-gray-600 text-sm mb-2">
+                Failed to load wishlist
+              </Text>
+              <TouchableOpacity
+                onPress={() => refetch()}
+                className="bg-blue-500 px-4 py-2 rounded-lg active:opacity-80"
+              >
+                <Text className="text-white text-sm font-semibold">Retry</Text>
+              </TouchableOpacity>
+            </View>
           ) : wishlist && wishlist.length > 0 ? (
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <View className="flex-row gap-3">
-                {wishlist.slice(0, 5).map((item: any) => {
-                  const place = item.place || item;
+                {wishlist.slice(0, 5).map((item: WishlistItem) => {
+                  const place = (item.place || item) as Place;
                   return (
                     <View
                       key={item.id}

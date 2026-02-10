@@ -4,10 +4,14 @@ import { Clock, MapPin, Users } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { RouteOptionsMenu } from "./RouteOptionsMenu";
+import type { RouteEntity } from "../model/route.type";
 
-const RouteCard = ({ route }) => {
+const RouteCard = ({ route }: { route: RouteEntity }) => {
   const router = useRouter();
   const price = route.params.duration / 60;
+  const isCompleted =
+    route.status === "Завершен" || route.status === "Completed";
+  const statusLabel = isCompleted ? "Completed" : route.status;
 
   const handleEdit = () => {
     console.log("Editing route:", route.id);
@@ -52,17 +56,15 @@ const RouteCard = ({ route }) => {
               <View className="flex-row items-center gap-2">
                 <View
                   className={`px-2 py-1 rounded ${
-                    route.status === "Завершен" ? "bg-blue-50" : "bg-gray-100"
+                    isCompleted ? "bg-blue-50" : "bg-gray-100"
                   }`}
                 >
                   <Text
                     className={`text-xs ${
-                      route.status === "Завершен"
-                        ? "text-blue-600"
-                        : "text-gray-600"
+                      isCompleted ? "text-blue-600" : "text-gray-600"
                     }`}
                   >
-                    {route.status}
+                    {statusLabel}
                   </Text>
                 </View>
                 <RouteOptionsMenu id={route.id} onEdit={handleEdit} />

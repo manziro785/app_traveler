@@ -2,12 +2,12 @@ import { useAuthStore } from "@/src/shared/model/auth.store";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import { fetchGoogleAuth, fetchLogin, fetchRegister } from "../api/auth";
-import { GoogleUser, LoginUser, RegisterUser } from "./auth.type";
+import { AuthResponse, GoogleUser, LoginUser, RegisterUser } from "./auth.type";
 
 export const useAuth = () => {
   const router = useRouter();
 
-  const handleSuccess = (data: { token: string }) => {
+  const handleSuccess = (data: AuthResponse) => {
     useAuthStore.getState().setToken(data.token);
     router.push("/(tabs)");
   };

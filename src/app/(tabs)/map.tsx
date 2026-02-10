@@ -8,7 +8,7 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
 const Map = () => {
-  const { data: places, isLoading } = useGetPlacesQuery();
+  const { data: places, isLoading, isError, refetch } = useGetPlacesQuery();
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
 
   const initialRegion = useMemo(() => {
@@ -76,7 +76,7 @@ const Map = () => {
           <View className="px-4 pt-4 pb-2 border-b border-gray-200">
             <View className="flex-row items-center justify-between">
               <Text className="text-lg font-bold text-gray-900">
-                {activePlace ? activePlace.name : "Места рядом"}
+                {activePlace ? activePlace.name : "Nearby places"}
               </Text>
               <Text className="text-sm text-gray-500">{total}</Text>
             </View>
@@ -101,6 +101,20 @@ const Map = () => {
                   />
                   <Skeleton width="50%" height={12} rounded="md" />
                 </View>
+              </View>
+            ) : isError ? (
+              <View className="py-6">
+                <Text className="text-sm text-gray-600 mb-2">
+                  Failed to load places
+                </Text>
+                <TouchableOpacity
+                  onPress={() => refetch()}
+                  className="bg-blue-500 px-4 py-2 rounded-lg self-start"
+                >
+                  <Text className="text-white font-semibold text-sm">
+                    Retry
+                  </Text>
+                </TouchableOpacity>
               </View>
             ) : activePlace ? (
               <TouchableOpacity activeOpacity={0.85} className="flex-row">
@@ -145,7 +159,7 @@ const Map = () => {
             ) : (
               <View className="py-6 items-center">
                 <Text className="text-sm text-gray-500">
-                  Нет мест поблизости
+                  No places nearby
                 </Text>
               </View>
             )}

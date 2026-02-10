@@ -3,10 +3,12 @@ import { Lightbulb } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { Skeleton } from "@/src/shared/ui/Skeleton";
+import { ErrorState } from "@/src/shared/ui/ErrorState";
+import { EmptyState } from "@/src/shared/ui/EmptyState";
 import { useGetInsightsQuery } from "../model/useHome";
 
 const AdvicedCard = () => {
-  const { data, isLoading } = useGetInsightsQuery();
+  const { data, isLoading, isError, refetch } = useGetInsightsQuery();
   if (isLoading) {
     return (
       <View className="bg-white rounded-3xl p-5 shadow-sm mb-4">
@@ -31,7 +33,28 @@ const AdvicedCard = () => {
       </View>
     );
   }
+  if (isError) {
+    return (
+      <View className="bg-white rounded-3xl p-5 shadow-sm mb-4">
+        <ErrorState
+          title="Failed to load tips"
+          actionLabel="Retry"
+          onAction={refetch}
+        />
+      </View>
+    );
+  }
 
+  if (!data || data.length === 0) {
+    return (
+      <View className="bg-white rounded-3xl p-5 shadow-sm mb-4">
+        <EmptyState
+          title="No recommendations yet"
+          description="We’ll show tips when they become available."
+        />
+      </View>
+    );
+  }
   return (
     <View className="bg-white rounded-3xl p-5 shadow-sm mb-4">
       <View className="flex-row items-center mb-6">
@@ -60,7 +83,7 @@ const AdvicedCard = () => {
           </Text>
         </View>
       </View>
-      {data.map((insight) => (
+      {data?.map((insight) => (
         <View className="space-y-3" key={insight.id}>
           <TouchableOpacity className="border border-1 border-gray-200 rounded-2xl p-4 mb-2">
             <View className="flex-row items-start justify-between">

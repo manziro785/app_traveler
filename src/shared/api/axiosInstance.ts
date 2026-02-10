@@ -23,7 +23,7 @@ api.interceptors.response.use(
   (res) => res,
   (error) => {
     if (error.response?.status === 401) {
-      console.warn("401: не авторизован");
+      console.warn("401: unauthorized");
 
       useAuthStore.getState().logout();
     }

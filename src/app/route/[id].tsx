@@ -32,9 +32,14 @@ import {
 import { Skeleton } from "@/src/shared/ui/Skeleton";
 
 const Reel = () => {
-  const { id } = useLocalSearchParams();
-  const { data, isLoading } = useGetRouteById(id);
-  const [expandedItems, setExpandedItems] = useState({});
+  const { id } = useLocalSearchParams<{ id?: string }>();
+  const routeId = Array.isArray(id) ? id[0] : id;
+  const { data, isLoading, isError, refetch } = useGetRouteById(
+    routeId ?? "",
+  );
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
+    {},
+  );
   const router = useRouter();
 
   const icons = [
@@ -69,7 +74,7 @@ const Reel = () => {
         color: colors[Math.floor(Math.random() * colors.length)],
       };
       return acc;
-    }, {});
+    }, {} as Record<string, { icon: (typeof icons)[number]; color: string }>);
   }, [data?.places]);
 
   if (isLoading) {
@@ -128,10 +133,28 @@ const Reel = () => {
       </>
     );
   }
+  if (isError || !data) {
+    return (
+      <View className="flex-1 items-center justify-center bg-white px-6">
+        <Text className="text-xl font-bold text-gray-900 mb-2">
+          Route unavailable
+        </Text>
+        <Text className="text-sm text-gray-500 text-center mb-6">
+          Failed to load the route. Please try again.
+        </Text>
+        <TouchableOpacity
+          onPress={() => refetch()}
+          className="bg-blue-600 px-6 py-3 rounded-xl"
+        >
+          <Text className="text-white font-semibold">Retry</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 
   console.log(data);
 
-  const time = data.params.duration / 60;
+  const time = data?.params.duration ? data.params.duration / 60 : 0;
 
   const toggleItem = (placeId) => {
     setExpandedItems((prev) => ({
@@ -141,7 +164,7 @@ const Reel = () => {
   };
 
   const handleEdit = () => {
-    router.push(`/editRoute/${data.id}`);
+    if (data?.id) router.push(`/editRoute/${data.id}`);
   };
 
   return (

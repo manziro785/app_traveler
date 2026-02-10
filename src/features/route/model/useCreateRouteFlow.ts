@@ -24,7 +24,7 @@ export function useCreateRouteFlow(totalSteps = 5) {
     if (step === 2) return !!form.timeAvailable;
     if (step === 3) return !!form.location;
     if (step === 4) return !!form.budget;
-    if (step === 5) return form.preferences.length > 0; // можно сделать необязательным
+    if (step === 5) return form.preferences.length > 0; // can be optional
     return false;
   }, [step, form]);
 

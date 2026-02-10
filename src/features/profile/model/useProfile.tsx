@@ -7,9 +7,15 @@ import {
   getWishlist,
   postWishlist,
 } from "../api/user";
+import type {
+  EditProfilePayload,
+  Profile,
+  WishlistItem,
+} from "./profile.type";
+import type { Place } from "@/src/shared/model/place.type";
 
 export const useGetProfileQuery = () => {
-  return useQuery({
+  return useQuery<Profile>({
     queryKey: ["users", "me"],
     queryFn: getProfile,
   });
@@ -26,21 +32,21 @@ export const useEditProfileMutation = () => {
   };
 
   return useMutation({
-    mutationFn: (formData) => editProfile(formData),
+    mutationFn: (formData: EditProfilePayload) => editProfile(formData),
     onSuccess: handleSuccess,
     onError: handleError,
   });
 };
 
 export const useGetWishlistQuery = () => {
-  return useQuery({
+  return useQuery<WishlistItem[]>({
     queryKey: ["users", "wishlist"],
     queryFn: getWishlist,
   });
 };
 
 export const useGetPlacesQuery = () => {
-  return useQuery({
+  return useQuery<Place[]>({
     queryKey: ["places"],
     queryFn: getPlaces,
   });
@@ -57,7 +63,7 @@ export const usePostWishlistMutation = () => {
   };
 
   return useMutation({
-    mutationFn: (formData) => postWishlist(formData),
+    mutationFn: (formData: Record<string, unknown>) => postWishlist(formData),
     onSuccess: handleSuccess,
     onError: handleError,
   });

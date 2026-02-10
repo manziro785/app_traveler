@@ -38,7 +38,7 @@ export default function Step4Budget({
     <View className="flex-1 bg-gray-50">
       <ScrollView className="flex-1 px-5 pt-5">
         <Text className="text-3xl font-bold text-gray-900 mb-2">Budget</Text>
-        <Text className="text-base text-gray-600 mb-8">Som for a walk у</Text>
+        <Text className="text-base text-gray-600 mb-8">Som for a walk</Text>
 
         <View className="flex-row flex-wrap gap-3">
           {budgetOptions.map((o) => (
@@ -47,7 +47,7 @@ export default function Step4Budget({
               label={o.label}
               icon={o.icon}
               isSelected={form.budget === o.id}
-              onPress={() => update("budget", o.id as any)}
+              onPress={() => update("budget", o.id)}
             />
           ))}
         </View>

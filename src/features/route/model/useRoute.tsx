@@ -8,14 +8,18 @@ import {
   getRouteById,
   getRoutes,
 } from "../api/route";
-import { RouteType } from "./route.type";
+import { RouteEntity, RouteType } from "./route.type";
 
 export const useRouteCreate = () => {
   const router = useRouter();
 
-  const handleSuccess = () => {
+  const handleSuccess = (data: RouteEntity) => {
     queryClient.invalidateQueries({ queryKey: ["route"] });
-    router.push("/(tabs)/route");
+    if (data?.id) {
+      router.push(`/route/${data.id}`);
+    } else {
+      router.push("/(tabs)/route");
+    }
   };
 
   const handleError = (error: unknown) => {
@@ -67,14 +71,14 @@ export const useDeleteRoute = () => {
 };
 
 export const useGetRoutes = () => {
-  return useQuery({
+  return useQuery<RouteEntity[]>({
     queryKey: ["route"],
     queryFn: getRoutes,
   });
 };
 
 export const useGetRouteById = (idRoute: string) => {
-  return useQuery({
+  return useQuery<RouteEntity>({
     queryKey: ["route", idRoute],
     queryFn: async () => getRouteById(idRoute),
     enabled: !!idRoute,

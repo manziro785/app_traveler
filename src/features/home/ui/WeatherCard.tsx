@@ -2,11 +2,12 @@ import { Sun } from "lucide-react-native";
 import React, { useEffect, useRef } from "react";
 import { Animated, Easing, Text, View } from "react-native";
 import { Skeleton } from "@/src/shared/ui/Skeleton";
+import { ErrorState } from "@/src/shared/ui/ErrorState";
 import { useGetWeatherQuery } from "../model/useHome";
 
 const WeatherCard = () => {
   const rotateAnim = useRef(new Animated.Value(0)).current;
-  const { data, isLoading } = useGetWeatherQuery();
+  const { data, isLoading, isError, refetch } = useGetWeatherQuery();
   useEffect(() => {
     Animated.loop(
       Animated.timing(rotateAnim, {
@@ -36,6 +37,18 @@ const WeatherCard = () => {
       </View>
     );
   }
+  if (isError) {
+    return (
+      <View className="bg-white/10 backdrop-blur-lg rounded-3xl p-4 mt-5">
+        <ErrorState
+          title="Weather unavailable"
+          description="Failed to load recommendations."
+          actionLabel="Retry"
+          onAction={refetch}
+        />
+      </View>
+    );
+  }
 
   const rotate = rotateAnim.interpolate({
     inputRange: [0, 1],
@@ -51,14 +64,14 @@ const WeatherCard = () => {
             </Animated.View>
             <View className="ml-3">
               <Text className="text-white text-2xl font-bold">
-                {data.weather.temp}°C
+                {data?.weather?.temp ?? "--"}°C
               </Text>
               <Text className="text-white/80 text-sm">Bishkek</Text>
             </View>
           </View>
           <View className="flex-1 ml-5">
             <Text className="text-white/90 text-sm text-right">
-              {data.recommendations}
+              {data?.recommendations ?? ""}
             </Text>
           </View>
         </View>
