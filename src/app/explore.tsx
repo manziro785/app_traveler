@@ -104,7 +104,6 @@ const Explore = () => {
 
   return (
     <View className="flex-1 bg-gray-50">
-      {/* Header */}
       <LinearGradient
         colors={["#1F83EB", "#0FAFD5"]}
         start={{ x: 0, y: 0 }}
@@ -123,7 +122,6 @@ const Explore = () => {
             <View className="w-10" />
           </View>
 
-          {/* Search Bar */}
           <View className="bg-white/20 backdrop-blur rounded-xl px-4 py-3 flex-row items-center">
             <Search color="#fff" size={20} />
             <TextInput
@@ -142,7 +140,6 @@ const Explore = () => {
         </View>
       </LinearGradient>
 
-      {/* Categories */}
       {categories.length > 0 && (
         <View className="bg-white border-b border-gray-200 px-4 py-3">
           <FlatList
@@ -179,7 +176,6 @@ const Explore = () => {
         </View>
       )}
 
-      {/* Stats */}
       <View className="bg-white px-4 py-3 border-b border-gray-200">
         <Text className="text-gray-600 text-sm">
           Found {filteredPlaces?.length || 0} places
@@ -192,7 +188,6 @@ const Explore = () => {
         </Text>
       </View>
 
-      {/* Places Grid */}
       <FlatList
         data={filteredPlaces}
         keyExtractor={(item) => item.id}
@@ -221,7 +216,6 @@ const Explore = () => {
 
           return (
             <View className="flex-1 bg-white rounded-2xl overflow-hidden shadow-sm mb-3">
-              {/* Image */}
               <View className="relative">
                 <Image
                   source={{
@@ -233,7 +227,6 @@ const Explore = () => {
                   resizeMode="cover"
                 />
 
-                {/* Wishlist Button */}
                 <Pressable
                   onPress={() => toggleWishlist(item.id)}
                   disabled={isPending}
@@ -248,7 +241,6 @@ const Explore = () => {
                   />
                 </Pressable>
 
-                {/* Rating */}
                 {item.rating && (
                   <View className="absolute bottom-2 left-2 bg-white/90 backdrop-blur px-2 py-1 rounded-lg flex-row items-center gap-1">
                     <Star color="#eab308" fill="#eab308" size={12} />
@@ -258,7 +250,6 @@ const Explore = () => {
                   </View>
                 )}
 
-                {/* Category Badge */}
                 {item.category?.name && (
                   <View className="absolute top-2 left-2 bg-blue-500/90 backdrop-blur px-2 py-1 rounded-lg">
                     <Text className="text-white font-medium text-xs">
@@ -268,7 +259,6 @@ const Explore = () => {
                 )}
               </View>
 
-              {/* Info */}
               <View className="p-3">
                 <Text
                   className="text-gray-900 font-bold text-sm mb-1"
