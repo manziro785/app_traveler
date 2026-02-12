@@ -29,6 +29,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Skeleton } from "@/src/shared/ui/Skeleton";
 
 const Reel = () => {
@@ -41,6 +42,7 @@ const Reel = () => {
     {},
   );
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   const icons = [
     Coffee,
@@ -302,7 +304,10 @@ const Reel = () => {
         </View>
       </ScrollView>
 
-      <View className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-3 pb-10">
+      <View
+        className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-3"
+        style={{ paddingBottom: Math.max(insets.bottom, 12) }}
+      >
         <View className="flex-row gap-3">
           <Link href="/(tabs)/map" asChild className="flex-1">
             <TouchableOpacity className="bg-gray-100 py-3 rounded-xl flex-row items-center justify-center gap-2">

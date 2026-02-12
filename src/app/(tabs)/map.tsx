@@ -6,28 +6,37 @@ import { ChevronLeft, MapPin, Star } from "lucide-react-native";
 import React, { useMemo, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Map = () => {
   const { data: places, isLoading, isError, refetch } = useGetPlacesQuery();
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
 
+  const normalizedPlaces = useMemo(() => {
+    return (places ?? []).filter((place) => {
+      return (
+        Number.isFinite(Number(place.lat)) && Number.isFinite(Number(place.lng))
+      );
+    });
+  }, [places]);
+
   const initialRegion = useMemo(() => {
-    const first = places?.[0];
+    const first = normalizedPlaces[0];
     return {
-      latitude: first?.lat ?? 42.8746,
-      longitude: first?.lng ?? 74.5698,
+      latitude: Number(first?.lat) || 42.8746,
+      longitude: Number(first?.lng) || 74.5698,
       latitudeDelta: 0.3,
       longitudeDelta: 0.3,
     };
-  }, [places]);
+  }, [normalizedPlaces]);
 
-  const total = places?.length ?? 0;
-  const activePlace = selectedPlace ?? places?.[0] ?? null;
+  const total = normalizedPlaces.length;
+  const activePlace = selectedPlace ?? normalizedPlaces[0] ?? null;
   const activePhoto = activePlace?.photos?.[0];
 
   return (
-    <View className="flex-1 bg-white">
-      <View className="bg-white flex-row justify-between pt-12 pb-3 px-4 border-b border-gray-200">
+    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+      <View className="bg-white flex-row justify-between pb-3 px-4 border-b border-gray-200">
         <Link href="/(tabs)" asChild>
           <TouchableOpacity className="items-center">
             <ChevronLeft />
@@ -45,31 +54,22 @@ const Map = () => {
             provider={PROVIDER_GOOGLE}
             style={{ flex: 1 }}
             initialRegion={initialRegion}
-            showsUserLocation
             showsMyLocationButton={false}
           >
-            {places?.map((place) => (
+            {normalizedPlaces.map((place) => (
               <Marker
                 key={place.id}
-                coordinate={{ latitude: place.lat, longitude: place.lng }}
+                coordinate={{
+                  latitude: Number(place.lat),
+                  longitude: Number(place.lng),
+                }}
+                title={place.name}
+                description={place.description ?? undefined}
+                pinColor="#3B82F6"
                 onPress={() => setSelectedPlace(place)}
-              >
-                <View className="items-center">
-                  <View className="w-10 h-10 rounded-full items-center justify-center shadow-lg bg-blue-500">
-                    <MapPin color="#fff" size={18} />
-                  </View>
-                </View>
-              </Marker>
+              />
             ))}
-
-            <Marker coordinate={{ latitude: 42.8746, longitude: 74.5898 }}>
-              <View className="w-3 h-3 bg-blue-500 rounded-full border-2 border-white shadow" />
-            </Marker>
           </MapView>
-
-          <TouchableOpacity className="absolute bottom-6 right-4 w-12 h-12 bg-white rounded-full items-center justify-center shadow-lg">
-            <View className="w-2 h-2 bg-blue-500 rounded-full" />
-          </TouchableOpacity>
         </View>
 
         <View className="bg-white rounded-t-3xl shadow-2xl">
@@ -158,15 +158,13 @@ const Map = () => {
               </TouchableOpacity>
             ) : (
               <View className="py-6 items-center">
-                <Text className="text-sm text-gray-500">
-                  No places nearby
-                </Text>
+                <Text className="text-sm text-gray-500">No places nearby</Text>
               </View>
             )}
           </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,15 +1,10 @@
+import { Skeleton } from "@/src/shared/ui/Skeleton";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import { ChevronLeft, User } from "lucide-react-native";
+import { User } from "lucide-react-native";
 import React from "react";
-import {
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { useGetProfileQuery } from "../model/useProfile";
-import { Skeleton } from "@/src/shared/ui/Skeleton";
 
 const HeaderProfile = () => {
   const router = useRouter();
@@ -70,18 +65,11 @@ const HeaderProfile = () => {
         end={{ x: 1, y: 1 }}
         className="px-6 pt-14 pb-24"
       >
-        <View className="flex-row items-center justify-between mb-6">
-          <TouchableOpacity
-            className="w-10 h-10 items-center justify-center"
-            onPress={() => router.back()}
-          >
-            <ChevronLeft color="white" size={24} />
-          </TouchableOpacity>
+        <View className="flex-row items-center justify-center mb-6">
           <Text className="text-white text-xl font-bold">Profile</Text>
-          <View></View>
         </View>
 
-        <View className="items-center flex-row">
+        <View className="items-center ml-5 flex-row">
           {data?.avatar ? (
             <Image
               source={{ uri: data.avatar }}

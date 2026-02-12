@@ -1,6 +1,7 @@
+import { BlurView } from "expo-blur";
 import { EllipsisVertical, Pencil, Trash2, X } from "lucide-react-native";
 import { useState } from "react";
-import { Modal, Pressable, Text, View } from "react-native";
+import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { DeleteDialog } from "./DeleteDialog";
 
 interface RouteOptionsMenuProps {
@@ -26,13 +27,16 @@ export function RouteOptionsMenu({ id, onEdit }: RouteOptionsMenuProps) {
       </Pressable>
 
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={menuVisible}
         onRequestClose={() => setMenuVisible(false)}
       >
         <View className="flex-1 justify-end">
-          <Pressable className="flex-1" onPress={() => setMenuVisible(false)} />
+          <Pressable style={StyleSheet.absoluteFill} onPress={() => setMenuVisible(false)}>
+            <BlurView intensity={24} tint="dark" style={StyleSheet.absoluteFill} />
+            <View className="flex-1 bg-black/15" />
+          </Pressable>
 
           <View className="bg-white rounded-t-3xl pb-8">
             <View className="items-center pt-3 pb-4">

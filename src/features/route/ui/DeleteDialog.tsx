@@ -1,5 +1,6 @@
+import { BlurView } from "expo-blur";
 import { AlertCircle, X } from "lucide-react-native";
-import { Modal, Pressable, Text, View } from "react-native";
+import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { useDeleteRoute } from "../model/useRoute";
 
 interface DeleteDialogProps {
@@ -35,10 +36,9 @@ export function DeleteDialog({ id, visible, onClose }: DeleteDialogProps) {
       visible={visible}
       onRequestClose={onClose}
     >
-      <Pressable
-        className="flex-1 bg-black/60 justify-center items-center px-5"
-        onPress={onClose}
-      >
+      <Pressable className="flex-1 justify-center items-center px-5" onPress={onClose}>
+        <BlurView intensity={24} tint="dark" style={StyleSheet.absoluteFill} />
+        <View style={StyleSheet.absoluteFillObject} className="bg-black/20" />
         <Pressable onPress={(e) => e.stopPropagation()}>
           <View className="bg-white dark:bg-gray-900 rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl">
             {/* Close Button */}

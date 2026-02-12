@@ -1,9 +1,10 @@
-import { Sun } from "lucide-react-native";
+import { Cloud, CloudRain, Sun } from "lucide-react-native";
 import React, { useEffect, useRef } from "react";
 import { Animated, Easing, Text, View } from "react-native";
 import { Skeleton } from "@/src/shared/ui/Skeleton";
 import { ErrorState } from "@/src/shared/ui/ErrorState";
 import { useGetWeatherQuery } from "../model/useHome";
+import { detectWeatherCategory } from "../model/weatherIcon";
 
 const WeatherCard = () => {
   const rotateAnim = useRef(new Animated.Value(0)).current;
@@ -17,7 +18,7 @@ const WeatherCard = () => {
         useNativeDriver: true,
       }),
     ).start();
-  }, []);
+  }, [rotateAnim]);
   if (isLoading) {
     return (
       <View className="bg-white/10 backdrop-blur-lg rounded-3xl p-4 mt-5">
@@ -54,14 +55,46 @@ const WeatherCard = () => {
     inputRange: [0, 1],
     outputRange: ["0deg", "360deg"],
   });
+
+  const weatherText = [
+    data?.weather?.description,
+    data?.weather?.condition,
+    data?.weather?.main,
+    data?.weather?.summary,
+    data?.description,
+    data?.condition,
+    data?.recommendations,
+  ]
+    .filter((value): value is string => Boolean(value))
+    .join(" ");
+
+  const category = detectWeatherCategory(weatherText);
+
+  const iconColor =
+    category === "sunny"
+      ? "#FFB800"
+      : category === "cloudy"
+        ? "#CBD5E1"
+        : category === "precipitation"
+          ? "#93C5FD"
+          : "#FFB800";
+
   return (
     <>
       <View className="bg-white/10 backdrop-blur-lg rounded-3xl p-4 mt-5">
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
-            <Animated.View style={{ transform: [{ rotate }] }}>
-              <Sun size={32} color="#FFB800" />
-            </Animated.View>
+            {category === "sunny" ? (
+              <Animated.View style={{ transform: [{ rotate }] }}>
+                <Sun size={32} color={iconColor} />
+              </Animated.View>
+            ) : category === "cloudy" ? (
+              <Cloud size={32} color={iconColor} />
+            ) : category === "precipitation" ? (
+              <CloudRain size={32} color={iconColor} />
+            ) : (
+              <Sun size={32} color={iconColor} />
+            )}
             <View className="ml-3">
               <Text className="text-white text-2xl font-bold">
                 {data?.weather?.temp ?? "--"}°C

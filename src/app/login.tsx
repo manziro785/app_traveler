@@ -42,7 +42,7 @@ const Login = () => {
           <GoogleForm title_google="Login" />
           <View className="flex-row items-center justify-center mt-6">
             <Text className="text-blue-100 text-base">
-              Don't have an account yet?{" "}
+              Don't have an account yet?
             </Text>
             <TouchableOpacity>
               <Link href="/register">
@@ -54,11 +54,11 @@ const Login = () => {
           </View>
         </View>
 
-        <Link href="/(tabs)" asChild>
+        {/* <Link href="/(tabs)" asChild>
           <TouchableOpacity>
             <Text>LC100</Text>
           </TouchableOpacity>
-        </Link>
+        </Link> */}
       </ScrollView>
     </LinearGradient>
   );

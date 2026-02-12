@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import { ChevronLeft, House } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function ProgressBar({
   currentStep,
@@ -14,10 +15,14 @@ export default function ProgressBar({
   onBack: () => void;
 }) {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const progress = (currentStep / totalSteps) * 100;
 
   return (
-    <View className="flex-row items-center px-4 py-3 bg-white h-20 mt-12">
+    <View
+      className="flex-row items-center px-4 py-3 bg-white"
+      style={{ paddingTop: Math.max(insets.top, 10) }}
+    >
       <TouchableOpacity onPress={onBack} className="p-2">
         <ChevronLeft size={24} color="#333" />
       </TouchableOpacity>

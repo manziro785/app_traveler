@@ -3,6 +3,7 @@ import ProgressBar from "@/src/features/route/ui/ProgressBar";
 import { useRouter } from "expo-router";
 import React from "react";
 import { ActivityIndicator, Alert, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouteCreate } from "../features/route/model/useRoute";
 import Step1WhoAndHow from "./_steps/Step1WhoAndHow";
 import Step2TimeAvailable from "./_steps/Step2TimeAvailable";
@@ -49,7 +50,10 @@ export default function CreateRoute() {
   }
 
   return (
-    <View className="flex-1 bg-gray-50">
+    <SafeAreaView
+      className="flex-1 bg-gray-50 -mt-14"
+      edges={["top", "bottom"]}
+    >
       <ProgressBar
         currentStep={flow.step}
         totalSteps={flow.totalSteps}
@@ -91,6 +95,6 @@ export default function CreateRoute() {
           onNext={handleNext}
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 }

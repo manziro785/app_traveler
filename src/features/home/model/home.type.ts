@@ -7,8 +7,14 @@ export type StatsResponse = {
 export type WeatherResponse = {
   weather: {
     temp: number;
+    description?: string | null;
+    main?: string | null;
+    condition?: string | null;
+    summary?: string | null;
   };
   recommendations: string;
+  description?: string | null;
+  condition?: string | null;
 };
 
 export type InsightItem = {
@@ -16,4 +22,3 @@ export type InsightItem = {
   category: string;
   title: string;
 };
-

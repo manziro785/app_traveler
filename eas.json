@@ -6,16 +6,57 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://trip-ai-backend-xtnc.onrender.com/api",
+        "EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID": "468995677177-mlencjuti7hktfcrqs89jt5ch1ekt8a0.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID": "468995677177-3mb0eul08uqklpvd4c6ob89jj33vuh9j.apps.googleusercontent.com"
+      }
     },
     "preview": {
       "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://trip-ai-backend-xtnc.onrender.com/api",
+        "EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID": "468995677177-mlencjuti7hktfcrqs89jt5ch1ekt8a0.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID": "468995677177-3mb0eul08uqklpvd4c6ob89jj33vuh9j.apps.googleusercontent.com"
+      },
       "android": {
         "buildType": "apk"
       }
     },
+    "preview2": {
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://trip-ai-backend-xtnc.onrender.com/api",
+        "EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID": "468995677177-mlencjuti7hktfcrqs89jt5ch1ekt8a0.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID": "468995677177-3mb0eul08uqklpvd4c6ob89jj33vuh9j.apps.googleusercontent.com"
+      },
+      "android": {
+        "gradleCommand": ":app:assembleRelease"
+      }
+    },
+    "preview3": {
+      "developmentClient": true,
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://trip-ai-backend-xtnc.onrender.com/api",
+        "EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID": "468995677177-mlencjuti7hktfcrqs89jt5ch1ekt8a0.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID": "468995677177-3mb0eul08uqklpvd4c6ob89jj33vuh9j.apps.googleusercontent.com"
+      }
+    },
+    "preview4": {
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://trip-ai-backend-xtnc.onrender.com/api",
+        "EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID": "468995677177-mlencjuti7hktfcrqs89jt5ch1ekt8a0.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID": "468995677177-3mb0eul08uqklpvd4c6ob89jj33vuh9j.apps.googleusercontent.com"
+      }
+    },
     "production": {
       "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://trip-ai-backend-xtnc.onrender.com/api",
+        "EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID": "468995677177-mlencjuti7hktfcrqs89jt5ch1ekt8a0.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID": "468995677177-3mb0eul08uqklpvd4c6ob89jj33vuh9j.apps.googleusercontent.com"
+      },
       "android": {
         "buildType": "app-bundle"
       }

@@ -9,11 +9,53 @@ WebBrowser.maybeCompleteAuthSession();
 type Props = { title_google: string };
 
 export default function GoogleForm({ title_google }: Props) {
+  const androidClientId = process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID;
+  const expoClientId = process.env.EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID;
+
+  if (!androidClientId) {
+    console.error(
+      "Google auth disabled: EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID is missing",
+    );
+
+    return (
+      <TouchableOpacity
+        className="bg-gray-900/50 rounded-2xl py-4 flex-row items-center justify-center gap-3"
+        activeOpacity={1}
+        disabled
+      >
+        <View className="w-5 h-5 bg-white rounded-full items-center justify-center">
+          <Text className="text-xs">G</Text>
+        </View>
+        <Text className="text-white text-base">Google login unavailable</Text>
+      </TouchableOpacity>
+    );
+  }
+
+  return (
+    <GoogleFormEnabled
+      title_google={title_google}
+      androidClientId={androidClientId}
+      expoClientId={expoClientId}
+    />
+  );
+}
+
+type EnabledProps = {
+  title_google: string;
+  androidClientId: string;
+  expoClientId: string | undefined;
+};
+
+function GoogleFormEnabled({
+  title_google,
+  androidClientId,
+  expoClientId,
+}: EnabledProps) {
   const { submitGoogleAuth, isLoading } = useAuth();
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId: process.env.EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID,
-    androidClientId: process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
+    expoClientId,
+    androidClientId,
     scopes: ["profile", "email"],
   });
 
