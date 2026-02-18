@@ -1,6 +1,6 @@
-import type { FormData } from "@/src/features/route/model/createRoute.types";
 import { OptionCard } from "@/src/features/route/ui/OptionCard";
-import type { LucideIcon } from "lucide-react-native";
+import type { FormData } from "@/src/features/route/model/createRoute.types";
+import { Option, StepProps } from "@/src/shared/types";
 import {
   Building2,
   Landmark,
@@ -11,13 +11,7 @@ import {
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-type Option = {
-  id: Exclude<FormData["location"], null>;
-  label: string;
-  icon: LucideIcon;
-};
-
-const locationOptions: Option[] = [
+const locationOptions: Option<NonNullable<FormData["location"]>>[] = [
   { id: "bishkek", label: "Bishkek", icon: Building2 },
   { id: "issyk-kul", label: "Issyk-Kul", icon: Mountain },
   { id: "karakol", label: "Karakol", icon: Trees },
@@ -25,15 +19,7 @@ const locationOptions: Option[] = [
   { id: "naryn", label: "Naryn", icon: MapPin },
 ];
 
-export default function Step3Location({
-  form,
-  update,
-  onNext,
-}: {
-  form: FormData;
-  update: <K extends keyof FormData>(key: K, value: FormData[K]) => void;
-  onNext: () => void;
-}) {
+export default function Step3Location({ form, update, onNext }: StepProps) {
   const canProceed = !!form.location;
 
   return (

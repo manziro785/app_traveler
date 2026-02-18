@@ -41,11 +41,9 @@ export const useAuth = () => {
       mode === "register" &&
       (status === 409 ||
         serverMessage.includes("already") ||
-        serverMessage.includes("exists") ||
-        serverMessage.includes("занят") ||
-        serverMessage.includes("уже"))
+        serverMessage.includes("exists"))
     ) {
-      Alert.alert("Регистрация", "Эта почта уже занята.");
+      Alert.alert("Registration", "This email is already taken.");
       return;
     }
 
@@ -54,26 +52,31 @@ export const useAuth = () => {
       (status === 401 ||
         status === 403 ||
         serverMessage.includes("invalid") ||
-        serverMessage.includes("credential") ||
-        serverMessage.includes("невер"))
+        serverMessage.includes("credential"))
     ) {
-      Alert.alert("Вход", "Неверная почта или пароль.");
+      Alert.alert("Login", "Invalid email or password.");
       return;
     }
 
     if (status === 0 || serverMessage.includes("network")) {
-      Alert.alert("Ошибка сети", "Проверьте интернет и попробуйте снова.");
+      Alert.alert(
+        "Network error",
+        "Check your internet connection and try again.",
+      );
       return;
     }
 
     const fallbackTitle =
       mode === "register"
-        ? "Ошибка регистрации"
+        ? "Registration error"
         : mode === "login"
-          ? "Ошибка входа"
-          : "Ошибка Google входа";
+          ? "Login error"
+          : "Google login error";
 
-    Alert.alert(fallbackTitle, "Не удалось выполнить запрос. Попробуйте снова.");
+    Alert.alert(
+      fallbackTitle,
+      "Failed to complete the request. Please try again.",
+    );
     console.error("Auth error:", extractServerMessage(error));
   };
 
@@ -102,6 +105,7 @@ export const useAuth = () => {
       return null;
     }
   };
+
   const submitLoginAuth = async (userData: LoginUser) => {
     try {
       return await loginMutation.mutateAsync(userData);

@@ -1,13 +1,11 @@
 import { Skeleton } from "@/src/shared/ui/Skeleton";
 import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router";
 import { User } from "lucide-react-native";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { useGetProfileQuery } from "../model/useProfile";
 
 const HeaderProfile = () => {
-  const router = useRouter();
   const { data, isLoading, isError, refetch } = useGetProfileQuery();
 
   if (isLoading) {

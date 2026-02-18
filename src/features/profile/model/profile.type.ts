@@ -1,4 +1,4 @@
-import type { Place } from "@/src/shared/model/place.type";
+import type { Place } from "@/src/shared/types/place.type";
 
 export type Profile = {
   id?: string;

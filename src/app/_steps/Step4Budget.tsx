@@ -1,6 +1,6 @@
-import type { FormData } from "@/src/features/route/model/createRoute.types";
 import { OptionCard } from "@/src/features/route/ui/OptionCard";
-import type { LucideIcon } from "lucide-react-native";
+import type { FormData } from "@/src/features/route/model/createRoute.types";
+import { Option, StepProps } from "@/src/shared/types";
 import {
   Coins,
   CreditCard,
@@ -10,28 +10,14 @@ import {
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-type Option = {
-  id: Exclude<FormData["budget"], null>;
-  label: string;
-  icon: LucideIcon;
-};
-
-const budgetOptions: Option[] = [
+const budgetOptions: Option<NonNullable<FormData["budget"]>>[] = [
   { id: "economy", label: "Economy (500)", icon: Coins },
   { id: "medium", label: "Medium (1500)", icon: Wallet },
   { id: "comfort", label: "Comfort (3000)", icon: CreditCard },
   { id: "unlimited", label: "Unlimited", icon: InfinityIcon },
 ];
 
-export default function Step4Budget({
-  form,
-  update,
-  onNext,
-}: {
-  form: FormData;
-  update: <K extends keyof FormData>(key: K, value: FormData[K]) => void;
-  onNext: () => void;
-}) {
+export default function Step4Budget({ form, update, onNext }: StepProps) {
   const canProceed = !!form.budget;
 
   return (

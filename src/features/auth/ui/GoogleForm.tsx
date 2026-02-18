@@ -13,9 +13,7 @@ export default function GoogleForm({ title_google }: Props) {
   const expoClientId = process.env.EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID;
 
   if (!androidClientId) {
-    console.error(
-      "Google auth disabled: EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID is missing",
-    );
+    console.error("Google auth disabled");
 
     return (
       <TouchableOpacity

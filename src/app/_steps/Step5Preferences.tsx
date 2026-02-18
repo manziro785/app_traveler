@@ -1,4 +1,4 @@
-import type { FormData } from "@/src/features/route/model/createRoute.types";
+import { StepProps } from "@/src/shared/types";
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
@@ -39,15 +39,7 @@ function Pill({
   );
 }
 
-export default function Step5Preferences({
-  form,
-  update,
-  onNext,
-}: {
-  form: FormData;
-  update: <K extends keyof FormData>(key: K, value: FormData[K]) => void;
-  onNext: () => void;
-}) {
+export default function Step5Preferences({ form, update, onNext }: StepProps) {
   const toggle = (id: string) => {
     const has = form.preferences.includes(id);
     update(

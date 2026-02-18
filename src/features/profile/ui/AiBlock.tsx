@@ -1,26 +1,15 @@
 import { useGetWishlistQuery } from "@/src/features/profile/model/useProfile";
+import type { Place } from "@/src/shared/types/place.type";
+import { Skeleton } from "@/src/shared/ui/Skeleton";
 import { useRouter } from "expo-router";
 import { Heart, MapPin } from "lucide-react-native";
 import React from "react";
-import {
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { Skeleton } from "@/src/shared/ui/Skeleton";
-import type { Place } from "@/src/shared/model/place.type";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import type { WishlistItem } from "../model/profile.type";
 
 const AiBlock = () => {
   const router = useRouter();
-  const {
-    data: wishlist,
-    isLoading,
-    isError,
-    refetch,
-  } = useGetWishlistQuery();
+  const { data: wishlist, isLoading, isError, refetch } = useGetWishlistQuery();
 
   return (
     <View className="mb-4">
@@ -48,7 +37,12 @@ const AiBlock = () => {
                   >
                     <Skeleton width="100%" height={96} rounded="md" />
                     <View className="p-2">
-                      <Skeleton width="80%" height={12} rounded="md" className="mb-2" />
+                      <Skeleton
+                        width="80%"
+                        height={12}
+                        rounded="md"
+                        className="mb-2"
+                      />
                       <Skeleton width="60%" height={10} rounded="md" />
                     </View>
                   </View>

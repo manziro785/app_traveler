@@ -1,4 +1,5 @@
 import { queryClient } from "@/src/app_core/lib/QueryClient";
+import type { Place } from "@/src/shared/types/place.type";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   editProfile,
@@ -7,12 +8,7 @@ import {
   getWishlist,
   postWishlist,
 } from "../api/user";
-import type {
-  EditProfilePayload,
-  Profile,
-  WishlistItem,
-} from "./profile.type";
-import type { Place } from "@/src/shared/model/place.type";
+import type { EditProfilePayload, Profile, WishlistItem } from "./profile.type";
 
 export const useGetProfileQuery = () => {
   return useQuery<Profile>({

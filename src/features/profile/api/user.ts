@@ -1,6 +1,10 @@
 import { api } from "@/src/shared/api/axiosInstance";
-import type { Place } from "@/src/shared/model/place.type";
-import type { Profile, WishlistItem, EditProfilePayload } from "../model/profile.type";
+import type { Place } from "@/src/shared/types/place.type";
+import type {
+  EditProfilePayload,
+  Profile,
+  WishlistItem,
+} from "../model/profile.type";
 
 export const getProfile = async (): Promise<Profile> => {
   const res = await api.get("/users/profile");

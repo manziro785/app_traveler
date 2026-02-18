@@ -1,6 +1,6 @@
-import type { FormData } from "@/src/features/route/model/createRoute.types";
 import { OptionCard } from "@/src/features/route/ui/OptionCard";
-import type { LucideIcon } from "lucide-react-native";
+import type { FormData } from "@/src/features/route/model/createRoute.types";
+import { Option, StepProps } from "@/src/shared/types";
 import {
   Bus,
   Car,
@@ -13,34 +13,22 @@ import {
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-type Option<T extends string> = { id: T; label: string; icon: LucideIcon };
-type CompanionsId = Exclude<FormData["companions"], null>;
-type TransportationId = Exclude<FormData["transportation"], null>;
-
-const companionsOptions: Option<CompanionsId>[] = [
+const companionsOptions: Option<NonNullable<FormData["companions"]>>[] = [
   { id: "alone", label: "Alone", icon: User },
   { id: "couple", label: "Couple", icon: Users },
   { id: "family", label: "Family", icon: UsersRound },
   { id: "company", label: "Company", icon: Coffee },
 ];
 
-const transportOptions: Option<TransportationId>[] = [
+const transportOptions: Option<NonNullable<FormData["transportation"]>>[] = [
   { id: "walking", label: "Walking", icon: User },
   { id: "car", label: "Car", icon: Car },
   { id: "taxi", label: "Taxi", icon: CarTaxiFront },
   { id: "public", label: "Public tr.", icon: Bus },
 ];
 
-export default function Step1WhoAndHow({
-  form,
-  update,
-  onNext,
-}: {
-  form: FormData;
-  update: <K extends keyof FormData>(key: K, value: FormData[K]) => void;
-  onNext: () => void;
-}) {
-  const canProceed = !!form.companions && !!form.transportation;
+export default function Step1WhoAndHow({ form, update, onNext }: StepProps) {
+  const canProceed = Boolean(form.companions && form.transportation);
 
   return (
     <View className="flex-1 bg-gray-50">
@@ -57,13 +45,13 @@ export default function Step1WhoAndHow({
             Who are you traveling with?
           </Text>
           <View className="flex-row flex-wrap gap-3">
-            {companionsOptions.map((o) => (
+            {companionsOptions.map((option) => (
               <OptionCard
-                key={o.id}
-                label={o.label}
-                icon={o.icon}
-                isSelected={form.companions === o.id}
-                onPress={() => update("companions", o.id)}
+                key={option.id}
+                label={option.label}
+                icon={option.icon}
+                isSelected={form.companions === option.id}
+                onPress={() => update("companions", option.id)}
               />
             ))}
           </View>
@@ -74,13 +62,13 @@ export default function Step1WhoAndHow({
             How to get around?
           </Text>
           <View className="flex-row flex-wrap gap-3">
-            {transportOptions.map((o) => (
+            {transportOptions.map((option) => (
               <OptionCard
-                key={o.id}
-                label={o.label}
-                icon={o.icon}
-                isSelected={form.transportation === o.id}
-                onPress={() => update("transportation", o.id)}
+                key={option.id}
+                label={option.label}
+                icon={option.icon}
+                isSelected={form.transportation === option.id}
+                onPress={() => update("transportation", option.id)}
               />
             ))}
           </View>

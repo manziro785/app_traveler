@@ -26,7 +26,6 @@ export default function CreateRoute() {
       flow.next();
       return;
     }
-
     try {
       await submitRoute(flow.payload);
     } catch (e) {

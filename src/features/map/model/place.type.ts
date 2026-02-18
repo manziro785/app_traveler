@@ -1,1 +1,1 @@
-export type { Place } from "@/src/shared/model/place.type";
+export type { Place } from "@/src/shared/types/place.type";

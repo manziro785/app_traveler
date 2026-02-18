@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { Link } from "expo-router";
+import { useRouter } from "expo-router";
 import { Mountain } from "lucide-react-native";
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -7,6 +7,8 @@ import GoogleForm from "../features/auth/ui/GoogleForm";
 import { LoginForm } from "../features/auth/ui/LoginForm";
 
 const Login = () => {
+  const router = useRouter();
+
   return (
     <LinearGradient
       colors={["#1E40AF", "#06B6D4", "#22D3EE"]}
@@ -23,7 +25,6 @@ const Login = () => {
           <View className="w-20 h-20 bg-white rounded-3xl items-center justify-center mb-6 shadow-lg">
             <Mountain color="#2563EB" size={34} strokeWidth={2.2} />
           </View>
-
           <Text className="text-white text-3xl font-bold mb-2">
             Welcome back!
           </Text>
@@ -31,7 +32,6 @@ const Login = () => {
             Log in to continue your journey
           </Text>
         </View>
-
         <View className="gap-4">
           <LoginForm />
           <View className="flex-row items-center my-4">
@@ -42,23 +42,15 @@ const Login = () => {
           <GoogleForm title_google="Login" />
           <View className="flex-row items-center justify-center mt-6">
             <Text className="text-blue-100 text-base">
-              Don't have an account yet?
+              Don&apos;t have an account yet?
             </Text>
-            <TouchableOpacity>
-              <Link href="/register">
-                <Text className="text-white text-base font-semibold">
-                  Register
-                </Text>
-              </Link>
+            <TouchableOpacity onPress={() => router.push("/register")}>
+              <Text className="text-white text-base font-semibold">
+                Register
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
-
-        {/* <Link href="/(tabs)" asChild>
-          <TouchableOpacity>
-            <Text>LC100</Text>
-          </TouchableOpacity>
-        </Link> */}
       </ScrollView>
     </LinearGradient>
   );

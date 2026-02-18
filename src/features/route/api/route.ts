@@ -1,5 +1,5 @@
 import { api } from "@/src/shared/api/axiosInstance";
-import { RouteEntity, RouteType } from "../model/route.type";
+import { EditRoutePayload, RouteEntity, RouteType } from "../model/route.type";
 
 export const createRoute = async (formData: RouteType): Promise<RouteEntity> => {
   const res = await api.post("/routes/generate", formData);
@@ -25,7 +25,7 @@ export const deleteRoute = async (idRoute: string): Promise<RouteEntity> => {
 
 export const editRoute = async (
   idRoute: string,
-  params: RouteType,
+  params: EditRoutePayload,
 ): Promise<RouteEntity> => {
   const res = await api.put(`/routes/${idRoute}`, params);
   return res.data.data;

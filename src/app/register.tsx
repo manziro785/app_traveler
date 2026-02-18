@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { Link } from "expo-router";
+import { useRouter } from "expo-router";
 import { Mountain } from "lucide-react-native";
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -7,6 +7,8 @@ import GoogleForm from "../features/auth/ui/GoogleForm";
 import { RegisterForm } from "../features/auth/ui/RegisterForm";
 
 const Register = () => {
+  const router = useRouter();
+
   return (
     <LinearGradient
       colors={["#1E40AF", "#06B6D4", "#22D3EE"]}
@@ -23,7 +25,6 @@ const Register = () => {
           <View className="w-16 h-16 bg-white rounded-2xl items-center justify-center mb-6 shadow-lg">
             <Mountain color="#2563EB" size={28} strokeWidth={2.2} />
           </View>
-
           <Text className="text-white text-3xl font-bold mb-2">
             Create account
           </Text>
@@ -31,25 +32,19 @@ const Register = () => {
             Start your trip with Trip AI
           </Text>
         </View>
-
         <RegisterForm />
-
         <View className="flex-row items-center my-4">
           <View className="flex-1 h-px bg-white/30" />
           <Text className="text-white/60 mx-4 text-sm">or</Text>
           <View className="flex-1 h-px bg-white/30" />
         </View>
-
         <GoogleForm title_google="Register" />
-
         <View className="flex-row items-center justify-center mt-6">
           <Text className="text-blue-100 text-base">
             Already have an account?{" "}
           </Text>
-          <TouchableOpacity>
-            <Link href="/login">
-              <Text className="text-white text-base font-semibold">Login</Text>
-            </Link>
+          <TouchableOpacity onPress={() => router.push("/login")}>
+            <Text className="text-white text-base font-semibold">Login</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

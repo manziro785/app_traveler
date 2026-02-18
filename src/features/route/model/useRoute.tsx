@@ -8,7 +8,7 @@ import {
   getRouteById,
   getRoutes,
 } from "../api/route";
-import { RouteEntity, RouteType } from "./route.type";
+import { EditRoutePayload, RouteEntity, RouteType } from "./route.type";
 
 export const useRouteCreate = () => {
   const router = useRouter();
@@ -54,7 +54,7 @@ export const useEditRoute = (id: string) => {
   };
 
   return useMutation({
-    mutationFn: (params: RouteType) => editRoute(id, params),
+    mutationFn: (params: EditRoutePayload) => editRoute(id, params),
     onSuccess: handleSuccess,
     onError: handleError,
   });

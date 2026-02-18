@@ -1,17 +1,11 @@
 import type { FormData } from "@/src/features/route/model/createRoute.types";
 import { OptionCard } from "@/src/features/route/ui/OptionCard";
-import type { LucideIcon } from "lucide-react-native";
+import { Option, StepProps } from "@/src/shared/types";
 import { CalendarDays, Clock, Sun, Timer } from "lucide-react-native";
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-type Option = {
-  id: FormData["timeAvailable"] extends infer T ? Exclude<T, null> : never;
-  label: string;
-  icon: LucideIcon;
-};
-
-const timeOptions: Option[] = [
+const timeOptions: Option<NonNullable<FormData["timeAvailable"]>>[] = [
   { id: "2-3hours", label: "2–3 hours", icon: Timer },
   { id: "half-day", label: "Half day", icon: Clock },
   { id: "fullday", label: "Full day", icon: Sun },
@@ -22,11 +16,7 @@ export default function Step2TimeAvailable({
   form,
   update,
   onNext,
-}: {
-  form: FormData;
-  update: <K extends keyof FormData>(key: K, value: FormData[K]) => void;
-  onNext: () => void;
-}) {
+}: StepProps) {
   const canProceed = !!form.timeAvailable;
 
   return (
@@ -36,7 +26,7 @@ export default function Step2TimeAvailable({
           How much time?
         </Text>
         <Text className="text-base text-gray-600 mb-8">
-          We'll tailor a plan to suit your pace.
+          We&apos;ll tailor a plan to suit your pace.
         </Text>
 
         <View className="flex-row flex-wrap gap-3">

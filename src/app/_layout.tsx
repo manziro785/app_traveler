@@ -3,11 +3,11 @@ import { TamaguiProvider } from "@tamagui/core";
 import "@tamagui/native/setup-zeego";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Stack, useRouter, useSegments } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import { queryClient } from "../app_core/lib/QueryClient";
 import "../app_core/styles/global.css";
 import { useAuthStore } from "../shared/model/auth.store";
-import * as SplashScreen from "expo-splash-screen";
 import { AppSplash } from "../shared/ui/AppSplash";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
@@ -20,7 +20,6 @@ export default function RootLayout() {
 
   useEffect(() => {
     const first = segments[0];
-
     const isPublic =
       segments.length === 0 ||
       first === "index" ||

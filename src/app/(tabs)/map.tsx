@@ -1,4 +1,3 @@
-import type { Place } from "@/src/features/map/model/place.type";
 import { useGetPlacesQuery } from "@/src/features/map/model/usePlaces";
 import { Skeleton } from "@/src/shared/ui/Skeleton";
 import { Link } from "expo-router";
@@ -10,7 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const Map = () => {
   const { data: places, isLoading, isError, refetch } = useGetPlacesQuery();
-  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+  const [selectedPlace, setSelectedPlace] = useState(null);
 
   const normalizedPlaces = useMemo(() => {
     return (places ?? []).filter((place) => {

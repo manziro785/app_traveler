@@ -14,15 +14,10 @@ export function DeleteDialog({ id, visible, onClose }: DeleteDialogProps) {
 
   const handleDelete = async () => {
     try {
-      console.log("=== DELETE START ===");
-      console.log("Deleting route with ID:", id);
-
       await mutateAsync(id);
-
-      console.log("=== DELETE SUCCESS ===");
       onClose();
     } catch (error) {
-      console.error("=== DELETE ERROR ===", error);
+      console.error("DELETE ERROR", error);
       alert(
         "Error: " + (error instanceof Error ? error.message : String(error)),
       );
@@ -36,12 +31,14 @@ export function DeleteDialog({ id, visible, onClose }: DeleteDialogProps) {
       visible={visible}
       onRequestClose={onClose}
     >
-      <Pressable className="flex-1 justify-center items-center px-5" onPress={onClose}>
+      <Pressable
+        className="flex-1 justify-center items-center px-5"
+        onPress={onClose}
+      >
         <BlurView intensity={24} tint="dark" style={StyleSheet.absoluteFill} />
         <View style={StyleSheet.absoluteFillObject} className="bg-black/20" />
         <Pressable onPress={(e) => e.stopPropagation()}>
           <View className="bg-white dark:bg-gray-900 rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl">
-            {/* Close Button */}
             <Pressable
               onPress={onClose}
               className="absolute top-4 right-4 z-10 p-1 active:opacity-50"
@@ -49,14 +46,12 @@ export function DeleteDialog({ id, visible, onClose }: DeleteDialogProps) {
               <X color="#999" size={24} />
             </Pressable>
 
-            {/* Icon */}
             <View className="items-center pt-8 pb-4">
               <View className="bg-red-100 dark:bg-red-900/30 p-4 rounded-full">
                 <AlertCircle color="#ef4444" size={40} />
               </View>
             </View>
 
-            {/* Content */}
             <View className="px-6 pb-6">
               <Text className="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
                 Delete Route?
@@ -67,7 +62,6 @@ export function DeleteDialog({ id, visible, onClose }: DeleteDialogProps) {
                 deleted.
               </Text>
 
-              {/* Buttons */}
               <View className="gap-3">
                 <Pressable
                   onPress={handleDelete}

@@ -4,7 +4,7 @@ import {
   useGetWishlistQuery,
   usePostWishlistMutation,
 } from "@/src/features/profile/model/useProfile";
-import type { Place } from "@/src/shared/model/place.type";
+import type { Place } from "@/src/shared/types/place.type";
 import { ErrorState } from "@/src/shared/ui/ErrorState";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
