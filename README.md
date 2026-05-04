@@ -1,4 +1,4 @@
-# Trip AI (Instamat)
+# Trip AI 
 
 AI-powered travel planning app built with Expo Router. Create personalized routes, explore destinations on a map, and get contextual recommendations like weather-aware tips.
 
